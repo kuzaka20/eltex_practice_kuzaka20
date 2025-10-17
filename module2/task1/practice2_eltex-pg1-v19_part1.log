@@ -1,0 +1,2079 @@
+ssh-keygen
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCUjR2l4NdfsrdFI6L5ZiWbe4cTUSrqtMxtVaJTCBjyg/ihA3TEzvaNFvI9tCG7b/B6KeSf+yAJBgEpgElaCVSmfTipBxspWwt2bu34T+mxKBILUyLCgMoBqAd5t0gBuhtv0Eop7UbZ8Cdd0L9dLWmIwSA1Ysn2nbRds3dLu6izBg6F8MhHsOcG9kfcSo2J2KyytYs0aKthKlX56TpFgUfimaR0mELu065uc4CYIrzCegdAuxZfuxzVxlytj+wDxAzIeIRvQOFwPCZqJTOU8FvLcCmsB5VKJ969xWt0GS8zp944zhEaKgg5JXVSWJrmb/NQrZIXk1pRCtpIH27cidBgdhml+TKbGCvgi1rh0jSTTC3CkHl4bg8LohjsSOrLL3MicMTYdUpacXmt7ghs/2qWa2++6K5N/Q+YOD4Ppp6u9V5KuJk/gmmtRANjOHAJotWSnrP845IBhZ4pAwI5KBuTagFuFgxJ3GNZt8BzSU437M/hH0JdLMGxhBD9bWBtKCk= eltex-pg1-v19@eltex-2025-autumn
+ssh-copy-id root@172.16.9.193
+ssh root@172.16.9.193
+diff id_rsa.pub .ssh/authorized_keys
+sudo useradd -m -s /bin/bash user1
+sudo passwd user1
+New password:
+Retype new password:
+passwd: password updated successfully
+sudo adduser user2
+info: Adding user `user2' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `user2' (1002) ...
+info: Adding new user `user2' (1002) with group `user2 (1002)' ...
+info: Creating home directory `/home/user2' ...
+info: Copying files from `/etc/skel' ...
+adduser user3
+info: Adding user `user3' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `user3' (1003) ...
+info: Adding new user `user3' (1003) with group `user3 (1003)' ...
+info: Creating home directory `/home/user3' ...
+info: Copying files from `/etc/skel' ...
+New password:
+Retype new password:
+passwd: password updated successfully
+Changing the user information for user3
+Enter the new value, or press ENTER for the default
+        Full Name []: 1
+        Room Number []: 1
+        Work Phone []: 1
+        Home Phone []: 1
+        Other []: 1
+Is the information correct? [Y/n] y
+info: Adding new user `user3' to supplemental / extra groups `users' ...
+info: Adding user `user3' to group `users' ...
+sudo usermod -s /usr/sbin/nologin user3
+su user3
+This account is currently not available.
+su -s /bin/bash user3
+exit
+sudo groupadd developers
+usermod -a -G developers user1 && usermod -a -G developers user2 && usermod -a -G developers user3
+groups user1
+user1 : user1 developers
+groups user2
+user2 : user2 developers
+groups user3
+user3 : user3 users developers
+root@eltex-practice2-pg1-v19:~# mkdir -p /opt/share
+root@eltex-practice2-pg1-v19:~# chgrp developers /opt/share
+root@eltex-practice2-pg1-v19:~# chmod 2770 /opt/share
+root@eltex-practice2-pg1-v19:~# su user1
+user1@eltex-practice2-pg1-v19:/root$ echo "umask 027" >> ~/.bashrc
+user1@eltex-practice2-pg1-v19:/root$ umask 027
+user1@eltex-practice2-pg1-v19:/root$ exit
+exit
+root@eltex-practice2-pg1-v19:~# sudo -u user1 touch /opt/share/file1.txt
+root@eltex-practice2-pg1-v19:~# sudo -u user2 touch /opt/share/file2.txt
+root@eltex-practice2-pg1-v19:~# sudo -u user2 rm /opt/share/file1.txt
+root@eltex-practice2-pg1-v19:~# sudo -u user1 rm /opt/share/file2.txt
+root@eltex-practice2-pg1-v19:~# chmod +t /opt/share
+root@eltex-practice2-pg1-v19:~# sudo -u user1 touch /opt/share/file3.txt
+root@eltex-practice2-pg1-v19:~# sudo -u user2 touch /opt/share/file4.txt
+root@eltex-practice2-pg1-v19:~# sudo -u user2 rm /opt/share/file3.txt
+rm: cannot remove '/opt/share/file3.txt': Operation not permitted
+root@eltex-practice2-pg1-v19:~# sudo -u user1 rm /opt/share/file4.txt
+rm: cannot remove '/opt/share/file4.txt': Operation not permitted
+root@eltex-practice2-pg1-v19:~# sudo visudo
+добавить строку user1 ALL=(ALL) /bin/dmesg
+root@eltex-practice2-pg1-v19:~# touch /usr/local/bin/dmesg_wrapper.sh
+root@eltex-practice2-pg1-v19:~# chown root:root /usr/local/bin/dmesg_wrapper.sh root@eltex-practice2-pg1-v19:~# chmod 4755 /usr/local/bin/dmesg_wrapper.sh
+root@eltex-practice2-pg1-v19:~# chmod +s /usr/local/bin/dmesg_wrapper.sh
+root@eltex-practice2-pg1-v19:~# ls -la /usr/local/bin/dmesg_wrapper.sh
+-rwsr-sr-x 1 root root 0 Oct 15 14:42 /usr/local/bin/dmesg_wrapper.sh
+root@eltex-practice2-pg1-v19:~# chage -M 10 user1
+root@eltex-practice2-pg1-v19:~# chage -M 10 user2
+root@eltex-practice2-pg1-v19:~# chage -M 10 user3
+root@eltex-practice2-pg1-v19:~# chage -l user3
+Last password change                                    : Oct 15, 2025
+Password expires                                        : Oct 25, 2025
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 0
+Maximum number of days between password change          : 10
+Number of days of warning before password expires       : 7
+root@eltex-practice2-pg1-v19:~# echo 'Кузлякин Дмитрий' >> /etc/motd
+root@eltex-practice2-pg1-v19:~# rsync -av /etc/ /root/etc_backup/
+sending incremental file list
+created directory /root/etc_backup
+./
+.pwd.lock
+.resolv.conf.systemd-resolved.bak
+.updated
+adduser.conf
+bash.bashrc
+bash_completion
+bindresvport.blacklist
+ca-certificates.conf
+crontab
+crypttab
+debconf.conf
+debian_version
+deluser.conf
+dhcpcd.conf
+e2scrub.conf
+environment
+ethertypes
+fstab
+fuse.conf
+gai.conf
+group
+group-
+gshadow
+gshadow-
+hdparm.conf
+host.conf
+hosts
+hosts.allow
+hosts.deny
+inputrc
+issue
+issue.net
+ld.so.cache
+ld.so.conf
+legal
+libaudit.conf
+locale.alias
+locale.conf
+locale.gen
+localtime -> /usr/share/zoneinfo/Etc/UTC
+login.defs
+logrotate.conf
+lsb-release
+machine-id
+magic
+magic.mime
+manpath.config
+mime.types
+mke2fs.conf
+modules
+motd
+mtab -> ../proc/self/mounts
+multipath.conf
+nanorc
+netconfig
+networks
+nftables.conf
+nsswitch.conf
+os-release -> ../usr/lib/os-release
+overlayroot.conf
+pam.conf
+passwd
+passwd-
+profile
+protocols
+resolv.conf -> ../run/systemd/resolve/stub-resolv.conf
+rmt -> /usr/sbin/rmt
+rpc
+rsyslog.conf
+screenrc
+sensors3.conf
+services
+shadow
+shadow-
+shells
+subgid
+subgid-
+subuid
+subuid-
+sudo.conf
+sudo_logsrvd.conf
+sudoers
+sysctl.conf
+timezone
+ucf.conf
+usb_modeswitch.conf
+vconsole.conf -> default/keyboard
+vtrgb -> /etc/alternatives/vtrgb
+wgetrc
+xattr.conf
+zsh_command_not_found
+ModemManager/
+ModemManager/connection.d/
+ModemManager/fcc-unlock.d/
+PackageKit/
+PackageKit/PackageKit.conf
+PackageKit/Vendor.conf
+UPower/
+UPower/UPower.conf
+X11/
+X11/Xsession.d/
+X11/Xsession.d/20dbus_xdg-runtime
+X11/Xsession.d/90gpg-agent
+X11/xkb/
+alternatives/
+alternatives/README
+alternatives/arptables -> /usr/sbin/arptables-nft
+alternatives/arptables-restore -> /usr/sbin/arptables-nft-restore
+alternatives/arptables-save -> /usr/sbin/arptables-nft-save
+alternatives/awk -> /usr/bin/gawk
+alternatives/awk.1.gz -> /usr/share/man/man1/gawk.1.gz
+alternatives/builtins.7.gz -> /usr/share/man/man7/bash-builtins.7.gz
+alternatives/ebtables -> /usr/sbin/ebtables-nft
+alternatives/ebtables-restore -> /usr/sbin/ebtables-nft-restore
+alternatives/ebtables-save -> /usr/sbin/ebtables-nft-save
+alternatives/editor -> /bin/nano
+alternatives/editor.1.gz -> /usr/share/man/man1/nano.1.gz
+alternatives/ex -> /usr/bin/vim.basic
+alternatives/ex.1.gz -> /usr/share/man/man1/vim.1.gz
+alternatives/ex.da.1.gz -> /usr/share/man/da/man1/vim.1.gz
+alternatives/ex.de.1.gz -> /usr/share/man/de/man1/vim.1.gz
+alternatives/ex.fr.1.gz -> /usr/share/man/fr/man1/vim.1.gz
+alternatives/ex.it.1.gz -> /usr/share/man/it/man1/vim.1.gz
+alternatives/ex.ja.1.gz -> /usr/share/man/ja/man1/vim.1.gz
+alternatives/ex.pl.1.gz -> /usr/share/man/pl/man1/vim.1.gz
+alternatives/ex.ru.1.gz -> /usr/share/man/ru/man1/vim.1.gz
+alternatives/ex.tr.1.gz -> /usr/share/man/tr/man1/vim.1.gz
+alternatives/ftp -> /usr/bin/tnftp
+alternatives/ftp.1.gz -> /usr/share/man/man1/tnftp.1.gz
+alternatives/infobrowser -> /usr/bin/info
+alternatives/infobrowser.1.gz -> /usr/share/man/man1/info.1.gz
+alternatives/ip6tables -> /usr/sbin/ip6tables-nft
+alternatives/ip6tables-restore -> /usr/sbin/ip6tables-nft-restore
+alternatives/ip6tables-save -> /usr/sbin/ip6tables-nft-save
+alternatives/iptables -> /usr/sbin/iptables-nft
+alternatives/iptables-restore -> /usr/sbin/iptables-nft-restore
+alternatives/iptables-save -> /usr/sbin/iptables-nft-save
+alternatives/jsondiff -> /usr/bin/json-patch-jsondiff
+alternatives/lzcat -> /usr/bin/xzcat
+alternatives/lzcat.1.gz -> /usr/share/man/man1/xzcat.1.gz
+alternatives/lzcmp -> /usr/bin/xzcmp
+alternatives/lzcmp.1.gz -> /usr/share/man/man1/xzcmp.1.gz
+alternatives/lzdiff -> /usr/bin/xzdiff
+alternatives/lzdiff.1.gz -> /usr/share/man/man1/xzdiff.1.gz
+alternatives/lzegrep -> /usr/bin/xzegrep
+alternatives/lzegrep.1.gz -> /usr/share/man/man1/xzegrep.1.gz
+alternatives/lzfgrep -> /usr/bin/xzfgrep
+alternatives/lzfgrep.1.gz -> /usr/share/man/man1/xzfgrep.1.gz
+alternatives/lzgrep -> /usr/bin/xzgrep
+alternatives/lzgrep.1.gz -> /usr/share/man/man1/xzgrep.1.gz
+alternatives/lzless -> /usr/bin/xzless
+alternatives/lzless.1.gz -> /usr/share/man/man1/xzless.1.gz
+alternatives/lzma -> /usr/bin/xz
+alternatives/lzma.1.gz -> /usr/share/man/man1/xz.1.gz
+alternatives/lzmore -> /usr/bin/xzmore
+alternatives/lzmore.1.gz -> /usr/share/man/man1/xzmore.1.gz
+alternatives/mt -> /usr/bin/mt-gnu
+alternatives/mt.1.gz -> /usr/share/man/man1/mt-gnu.1.gz
+alternatives/nawk -> /usr/bin/gawk
+alternatives/nawk.1.gz -> /usr/share/man/man1/gawk.1.gz
+alternatives/nc -> /bin/nc.openbsd
+alternatives/nc.1.gz -> /usr/share/man/man1/nc_openbsd.1.gz
+alternatives/netcat -> /bin/nc.openbsd
+alternatives/netcat.1.gz -> /usr/share/man/man1/nc_openbsd.1.gz
+alternatives/newt-palette -> /etc/newt/palette.ubuntu
+alternatives/pager -> /usr/bin/less
+alternatives/pager.1.gz -> /usr/share/man/man1/less.1.gz
+alternatives/pico -> /bin/nano
+alternatives/pico.1.gz -> /usr/share/man/man1/nano.1.gz
+alternatives/pinentry -> /usr/bin/pinentry-curses
+alternatives/pinentry.1.gz -> /usr/share/man/man1/pinentry-curses.1.gz
+alternatives/pybabel -> /usr/bin/pybabel-python3
+alternatives/rmt -> /usr/sbin/rmt-tar
+alternatives/rmt.8.gz -> /usr/share/man/man8/rmt-tar.8.gz
+alternatives/rview -> /usr/bin/vim.basic
+alternatives/rvim -> /usr/bin/vim.basic
+alternatives/sar -> /usr/bin/sar.sysstat
+alternatives/sar.1.gz -> /usr/share/man/man1/sar.sysstat.1.gz
+alternatives/telnet -> /usr/bin/inetutils-telnet
+alternatives/telnet.1.gz -> /usr/share/man/man1/inetutils-telnet.1.gz
+alternatives/text.plymouth -> /usr/share/plymouth/themes/ubuntu-text/ubuntu-text.plymouth
+alternatives/unlzma -> /usr/bin/unxz
+alternatives/unlzma.1.gz -> /usr/share/man/man1/unxz.1.gz
+alternatives/vi -> /usr/bin/vim.basic
+alternatives/vi.1.gz -> /usr/share/man/man1/vim.1.gz
+alternatives/vi.da.1.gz -> /usr/share/man/da/man1/vim.1.gz
+alternatives/vi.de.1.gz -> /usr/share/man/de/man1/vim.1.gz
+alternatives/vi.fr.1.gz -> /usr/share/man/fr/man1/vim.1.gz
+alternatives/vi.it.1.gz -> /usr/share/man/it/man1/vim.1.gz
+alternatives/vi.ja.1.gz -> /usr/share/man/ja/man1/vim.1.gz
+alternatives/vi.pl.1.gz -> /usr/share/man/pl/man1/vim.1.gz
+alternatives/vi.ru.1.gz -> /usr/share/man/ru/man1/vim.1.gz
+alternatives/vi.tr.1.gz -> /usr/share/man/tr/man1/vim.1.gz
+alternatives/view -> /usr/bin/vim.basic
+alternatives/view.1.gz -> /usr/share/man/man1/vim.1.gz
+alternatives/view.da.1.gz -> /usr/share/man/da/man1/vim.1.gz
+alternatives/view.de.1.gz -> /usr/share/man/de/man1/vim.1.gz
+alternatives/view.fr.1.gz -> /usr/share/man/fr/man1/vim.1.gz
+alternatives/view.it.1.gz -> /usr/share/man/it/man1/vim.1.gz
+alternatives/view.ja.1.gz -> /usr/share/man/ja/man1/vim.1.gz
+alternatives/view.pl.1.gz -> /usr/share/man/pl/man1/vim.1.gz
+alternatives/view.ru.1.gz -> /usr/share/man/ru/man1/vim.1.gz
+alternatives/view.tr.1.gz -> /usr/share/man/tr/man1/vim.1.gz
+alternatives/vim -> /usr/bin/vim.basic
+alternatives/vimdiff -> /usr/bin/vim.basic
+alternatives/vtrgb -> /etc/console-setup/vtrgb
+alternatives/which -> /usr/bin/which.debianutils
+alternatives/which.1.gz -> /usr/share/man/man1/which.debianutils.1.gz
+alternatives/which.de1.gz -> /usr/share/man/de/man1/which.debianutils.1.gz
+alternatives/which.es1.gz -> /usr/share/man/es/man1/which.debianutils.1.gz
+alternatives/which.fr1.gz -> /usr/share/man/fr/man1/which.debianutils.1.gz
+alternatives/which.it1.gz -> /usr/share/man/it/man1/which.debianutils.1.gz
+alternatives/which.ja1.gz -> /usr/share/man/ja/man1/which.debianutils.1.gz
+alternatives/which.pl1.gz -> /usr/share/man/pl/man1/which.debianutils.1.gz
+alternatives/which.sl1.gz -> /usr/share/man/sl/man1/which.debianutils.1.gz
+apparmor.d/
+apparmor.d/1password
+apparmor.d/Discord
+apparmor.d/MongoDB_Compass
+apparmor.d/QtWebEngineProcess
+apparmor.d/balena-etcher
+apparmor.d/brave
+apparmor.d/buildah
+apparmor.d/busybox
+apparmor.d/cam
+apparmor.d/ch-checkns
+apparmor.d/ch-run
+apparmor.d/chrome
+apparmor.d/code
+apparmor.d/crun
+apparmor.d/devhelp
+apparmor.d/element-desktop
+apparmor.d/epiphany
+apparmor.d/evolution
+apparmor.d/firefox
+apparmor.d/flatpak
+apparmor.d/foliate
+apparmor.d/geary
+apparmor.d/github-desktop
+apparmor.d/goldendict
+apparmor.d/ipa_verify
+apparmor.d/kchmviewer
+apparmor.d/keybase
+apparmor.d/lc-compliance
+apparmor.d/libcamerify
+apparmor.d/linux-sandbox
+apparmor.d/loupe
+apparmor.d/lsb_release
+apparmor.d/lxc-attach
+apparmor.d/lxc-create
+apparmor.d/lxc-destroy
+apparmor.d/lxc-execute
+apparmor.d/lxc-stop
+apparmor.d/lxc-unshare
+apparmor.d/lxc-usernsexec
+apparmor.d/mmdebstrap
+apparmor.d/msedge
+apparmor.d/nautilus
+apparmor.d/notepadqq
+apparmor.d/nvidia_modprobe
+apparmor.d/obsidian
+apparmor.d/opam
+apparmor.d/opera
+apparmor.d/pageedit
+apparmor.d/plasmashell
+apparmor.d/podman
+apparmor.d/polypane
+apparmor.d/privacybrowser
+apparmor.d/qcam
+apparmor.d/qmapshack
+apparmor.d/qutebrowser
+apparmor.d/rootlesskit
+apparmor.d/rpm
+apparmor.d/rssguard
+apparmor.d/runc
+apparmor.d/sbuild
+apparmor.d/sbuild-abort
+apparmor.d/sbuild-adduser
+apparmor.d/sbuild-apt
+apparmor.d/sbuild-checkpackages
+apparmor.d/sbuild-clean
+apparmor.d/sbuild-createchroot
+apparmor.d/sbuild-destroychroot
+apparmor.d/sbuild-distupgrade
+apparmor.d/sbuild-hold
+apparmor.d/sbuild-shell
+apparmor.d/sbuild-unhold
+apparmor.d/sbuild-update
+apparmor.d/sbuild-upgrade
+apparmor.d/scide
+apparmor.d/signal-desktop
+apparmor.d/slack
+apparmor.d/slirp4netns
+apparmor.d/steam
+apparmor.d/stress-ng
+apparmor.d/surfshark
+apparmor.d/systemd-coredump
+apparmor.d/thunderbird
+apparmor.d/toybox
+apparmor.d/transmission
+apparmor.d/trinity
+apparmor.d/tup
+apparmor.d/tuxedo-control-center
+apparmor.d/ubuntu_pro_apt_news
+apparmor.d/ubuntu_pro_esm_cache
+apparmor.d/unix-chkpwd
+apparmor.d/unprivileged_userns
+apparmor.d/userbindmount
+apparmor.d/usr.bin.man
+apparmor.d/usr.bin.tcpdump
+apparmor.d/usr.lib.snapd.snap-confine.real
+apparmor.d/usr.sbin.rsyslogd
+apparmor.d/uwsgi-core
+apparmor.d/vdens
+apparmor.d/virtiofsd
+apparmor.d/vivaldi-bin
+apparmor.d/vpnns
+apparmor.d/wike
+apparmor.d/wpcom
+apparmor.d/abi/
+apparmor.d/abi/3.0
+apparmor.d/abi/4.0
+apparmor.d/abi/kernel-5.4-outoftree-network
+apparmor.d/abi/kernel-5.4-vanilla
+apparmor.d/abstractions/
+apparmor.d/abstractions/X
+apparmor.d/abstractions/apache2-common
+apparmor.d/abstractions/aspell
+apparmor.d/abstractions/audio
+apparmor.d/abstractions/authentication
+apparmor.d/abstractions/base
+apparmor.d/abstractions/bash
+apparmor.d/abstractions/consoles
+apparmor.d/abstractions/crypto
+apparmor.d/abstractions/cups-client
+apparmor.d/abstractions/dbus
+apparmor.d/abstractions/dbus-accessibility
+apparmor.d/abstractions/dbus-accessibility-strict
+apparmor.d/abstractions/dbus-network-manager-strict
+apparmor.d/abstractions/dbus-session
+apparmor.d/abstractions/dbus-session-strict
+apparmor.d/abstractions/dbus-strict
+apparmor.d/abstractions/dconf
+apparmor.d/abstractions/dovecot-common
+apparmor.d/abstractions/dri-common
+apparmor.d/abstractions/dri-enumerate
+apparmor.d/abstractions/enchant
+apparmor.d/abstractions/exo-open
+apparmor.d/abstractions/fcitx
+apparmor.d/abstractions/fcitx-strict
+apparmor.d/abstractions/fonts
+apparmor.d/abstractions/freedesktop.org
+apparmor.d/abstractions/gio-open
+apparmor.d/abstractions/gnome
+apparmor.d/abstractions/gnupg
+apparmor.d/abstractions/groff
+apparmor.d/abstractions/gtk
+apparmor.d/abstractions/gvfs-open
+apparmor.d/abstractions/hosts_access
+apparmor.d/abstractions/ibus
+apparmor.d/abstractions/kde
+apparmor.d/abstractions/kde-globals-write
+apparmor.d/abstractions/kde-icon-cache-write
+apparmor.d/abstractions/kde-language-write
+apparmor.d/abstractions/kde-open5
+apparmor.d/abstractions/kerberosclient
+apparmor.d/abstractions/ldapclient
+apparmor.d/abstractions/libpam-systemd
+apparmor.d/abstractions/likewise
+apparmor.d/abstractions/mdns
+apparmor.d/abstractions/mesa
+apparmor.d/abstractions/mir
+apparmor.d/abstractions/mozc
+apparmor.d/abstractions/mysql
+apparmor.d/abstractions/nameservice
+apparmor.d/abstractions/nis
+apparmor.d/abstractions/nss-systemd
+apparmor.d/abstractions/nvidia
+apparmor.d/abstractions/opencl
+apparmor.d/abstractions/opencl-common
+apparmor.d/abstractions/opencl-intel
+apparmor.d/abstractions/opencl-mesa
+apparmor.d/abstractions/opencl-nvidia
+apparmor.d/abstractions/opencl-pocl
+apparmor.d/abstractions/openssl
+apparmor.d/abstractions/orbit2
+apparmor.d/abstractions/p11-kit
+apparmor.d/abstractions/perl
+apparmor.d/abstractions/php
+apparmor.d/abstractions/php-worker
+apparmor.d/abstractions/php5
+apparmor.d/abstractions/postfix-common
+apparmor.d/abstractions/private-files
+apparmor.d/abstractions/private-files-strict
+apparmor.d/abstractions/python
+apparmor.d/abstractions/qt5
+apparmor.d/abstractions/qt5-compose-cache-write
+apparmor.d/abstractions/qt5-settings-write
+apparmor.d/abstractions/recent-documents-write
+apparmor.d/abstractions/ruby
+apparmor.d/abstractions/samba
+apparmor.d/abstractions/samba-rpcd
+apparmor.d/abstractions/smbpass
+apparmor.d/abstractions/snap_browsers
+apparmor.d/abstractions/ssl_certs
+apparmor.d/abstractions/ssl_keys
+apparmor.d/abstractions/svn-repositories
+apparmor.d/abstractions/transmission-common
+apparmor.d/abstractions/trash
+apparmor.d/abstractions/ubuntu-bittorrent-clients
+apparmor.d/abstractions/ubuntu-browsers
+apparmor.d/abstractions/ubuntu-console-browsers
+apparmor.d/abstractions/ubuntu-console-email
+apparmor.d/abstractions/ubuntu-email
+apparmor.d/abstractions/ubuntu-feed-readers
+apparmor.d/abstractions/ubuntu-gnome-terminal
+apparmor.d/abstractions/ubuntu-helpers
+apparmor.d/abstractions/ubuntu-konsole
+apparmor.d/abstractions/ubuntu-media-players
+apparmor.d/abstractions/ubuntu-unity7-base
+apparmor.d/abstractions/ubuntu-unity7-launcher
+apparmor.d/abstractions/ubuntu-unity7-messaging
+apparmor.d/abstractions/ubuntu-xterm
+apparmor.d/abstractions/user-download
+apparmor.d/abstractions/user-mail
+apparmor.d/abstractions/user-manpages
+apparmor.d/abstractions/user-tmp
+apparmor.d/abstractions/user-write
+apparmor.d/abstractions/video
+apparmor.d/abstractions/vulkan
+apparmor.d/abstractions/wayland
+apparmor.d/abstractions/web-data
+apparmor.d/abstractions/winbind
+apparmor.d/abstractions/wutmp
+apparmor.d/abstractions/xad
+apparmor.d/abstractions/xdg-desktop
+apparmor.d/abstractions/xdg-open
+apparmor.d/abstractions/apparmor_api/
+apparmor.d/abstractions/apparmor_api/change_profile
+apparmor.d/abstractions/apparmor_api/examine
+apparmor.d/abstractions/apparmor_api/find_mountpoint
+apparmor.d/abstractions/apparmor_api/introspect
+apparmor.d/abstractions/apparmor_api/is_enabled
+apparmor.d/abstractions/ubuntu-browsers.d/
+apparmor.d/abstractions/ubuntu-browsers.d/chromium-browser
+apparmor.d/abstractions/ubuntu-browsers.d/java
+apparmor.d/abstractions/ubuntu-browsers.d/kde
+apparmor.d/abstractions/ubuntu-browsers.d/mailto
+apparmor.d/abstractions/ubuntu-browsers.d/multimedia
+apparmor.d/abstractions/ubuntu-browsers.d/plugins-common
+apparmor.d/abstractions/ubuntu-browsers.d/productivity
+apparmor.d/abstractions/ubuntu-browsers.d/text-editors
+apparmor.d/abstractions/ubuntu-browsers.d/ubuntu-integration
+apparmor.d/abstractions/ubuntu-browsers.d/ubuntu-integration-xul
+apparmor.d/abstractions/ubuntu-browsers.d/user-files
+apparmor.d/disable/
+apparmor.d/force-complain/
+apparmor.d/local/
+apparmor.d/local/README
+apparmor.d/local/lsb_release
+apparmor.d/local/nvidia_modprobe
+apparmor.d/local/ubuntu_pro_apt_news
+apparmor.d/local/ubuntu_pro_esm_cache
+apparmor.d/local/usr.bin.man
+apparmor.d/local/usr.bin.tcpdump
+apparmor.d/local/usr.lib.snapd.snap-confine.real
+apparmor.d/local/usr.sbin.rsyslogd
+apparmor.d/rsyslog.d/
+apparmor.d/rsyslog.d/README
+apparmor.d/tunables/
+apparmor.d/tunables/alias
+apparmor.d/tunables/apparmorfs
+apparmor.d/tunables/dovecot
+apparmor.d/tunables/etc
+apparmor.d/tunables/global
+apparmor.d/tunables/home
+apparmor.d/tunables/kernelvars
+apparmor.d/tunables/multiarch
+apparmor.d/tunables/proc
+apparmor.d/tunables/run
+apparmor.d/tunables/securityfs
+apparmor.d/tunables/share
+apparmor.d/tunables/sys
+apparmor.d/tunables/xdg-user-dirs
+apparmor.d/tunables/home.d/
+apparmor.d/tunables/home.d/site.local
+apparmor.d/tunables/home.d/ubuntu
+apparmor.d/tunables/multiarch.d/
+apparmor.d/tunables/multiarch.d/site.local
+apparmor.d/tunables/xdg-user-dirs.d/
+apparmor.d/tunables/xdg-user-dirs.d/site.local
+apparmor/
+apparmor/parser.conf
+apport/
+apport/crashdb.conf
+apport/report-ignore/
+apport/report-ignore/README.denylist
+apt/
+apt/sources.list
+apt/apt.conf.d/
+apt/apt.conf.d/01-vendor-ubuntu
+apt/apt.conf.d/01autoremove
+apt/apt.conf.d/10periodic
+apt/apt.conf.d/15update-stamp
+apt/apt.conf.d/20apt-esm-hook.conf
+apt/apt.conf.d/20archive
+apt/apt.conf.d/20auto-upgrades
+apt/apt.conf.d/20packagekit
+apt/apt.conf.d/20snapd.conf
+apt/apt.conf.d/50appstream
+apt/apt.conf.d/50command-not-found
+apt/apt.conf.d/50unattended-upgrades
+apt/apt.conf.d/70debconf
+apt/apt.conf.d/99needrestart
+apt/apt.conf.d/99update-notifier
+apt/auth.conf.d/
+apt/keyrings/
+apt/preferences.d.save/
+apt/preferences.d.save/ubuntu-pro-esm-apps
+apt/preferences.d.save/ubuntu-pro-esm-infra
+apt/preferences.d/
+apt/preferences.d/ubuntu-pro-esm-apps
+apt/preferences.d/ubuntu-pro-esm-infra
+apt/sources.list.d/
+apt/sources.list.d/ubuntu.sources
+apt/sources.list.d/ubuntu.sources.curtin.orig
+apt/trusted.gpg.d/
+apt/trusted.gpg.d/ubuntu-keyring-2012-cdimage.gpg
+apt/trusted.gpg.d/ubuntu-keyring-2018-archive.gpg
+bash_completion.d/
+bash_completion.d/git-prompt
+binfmt.d/
+byobu/
+byobu/backend
+byobu/socketdir
+ca-certificates/
+ca-certificates/update.d/
+cloud/
+cloud/cloud-init.disabled
+cloud/cloud.cfg
+cloud/ds-identify.cfg
+cloud/clean.d/
+cloud/clean.d/99-installer
+cloud/cloud.cfg.d/
+cloud/cloud.cfg.d/05_logging.cfg
+cloud/cloud.cfg.d/20-disable-cc-dpkg-grub.cfg
+cloud/cloud.cfg.d/90-installer-network.cfg
+cloud/cloud.cfg.d/90_dpkg.cfg
+cloud/cloud.cfg.d/99-installer.cfg
+cloud/cloud.cfg.d/README
+cloud/cloud.cfg.d/curtin-preserve-sources.cfg
+cloud/templates/
+cloud/templates/chef_client.rb.tmpl
+cloud/templates/chrony.conf.almalinux.tmpl
+cloud/templates/chrony.conf.alpine.tmpl
+cloud/templates/chrony.conf.centos.tmpl
+cloud/templates/chrony.conf.cloudlinux.tmpl
+cloud/templates/chrony.conf.cos.tmpl
+cloud/templates/chrony.conf.debian.tmpl
+cloud/templates/chrony.conf.fedora.tmpl
+cloud/templates/chrony.conf.freebsd.tmpl
+cloud/templates/chrony.conf.opensuse-leap.tmpl
+cloud/templates/chrony.conf.opensuse-microos.tmpl
+cloud/templates/chrony.conf.opensuse-tumbleweed.tmpl
+cloud/templates/chrony.conf.opensuse.tmpl
+cloud/templates/chrony.conf.photon.tmpl
+cloud/templates/chrony.conf.rhel.tmpl
+cloud/templates/chrony.conf.rocky.tmpl
+cloud/templates/chrony.conf.sle-micro.tmpl
+cloud/templates/chrony.conf.sle_hpc.tmpl
+cloud/templates/chrony.conf.sles.tmpl
+cloud/templates/chrony.conf.ubuntu.tmpl
+cloud/templates/hosts.alpine.tmpl
+cloud/templates/hosts.aosc.tmpl
+cloud/templates/hosts.arch.tmpl
+cloud/templates/hosts.azurelinux.tmpl
+cloud/templates/hosts.debian.tmpl
+cloud/templates/hosts.freebsd.tmpl
+cloud/templates/hosts.gentoo.tmpl
+cloud/templates/hosts.mariner.tmpl
+cloud/templates/hosts.photon.tmpl
+cloud/templates/hosts.redhat.tmpl
+cloud/templates/hosts.suse.tmpl
+cloud/templates/ntp.conf.almalinux.tmpl
+cloud/templates/ntp.conf.alpine.tmpl
+cloud/templates/ntp.conf.cloudlinux.tmpl
+cloud/templates/ntp.conf.debian.tmpl
+cloud/templates/ntp.conf.fedora.tmpl
+cloud/templates/ntp.conf.freebsd.tmpl
+cloud/templates/ntp.conf.opensuse.tmpl
+cloud/templates/ntp.conf.photon.tmpl
+cloud/templates/ntp.conf.rhel.tmpl
+cloud/templates/ntp.conf.rocky.tmpl
+cloud/templates/ntp.conf.sles.tmpl
+cloud/templates/ntp.conf.ubuntu.tmpl
+cloud/templates/ntpd.conf.openbsd.tmpl
+cloud/templates/resolv.conf.tmpl
+cloud/templates/sources.list.debian.deb822.tmpl
+cloud/templates/sources.list.debian.tmpl
+cloud/templates/sources.list.ubuntu.deb822.tmpl
+cloud/templates/sources.list.ubuntu.tmpl
+cloud/templates/systemd.resolved.conf.tmpl
+cloud/templates/timesyncd.conf.tmpl
+console-setup/
+console-setup/ISO-8859-1.acm
+console-setup/Uni2-Fixed16.psf.gz
+console-setup/cached_ISO-8859-1.acm.gz
+console-setup/cached_ISO-8859-1_del.kmap.gz
+console-setup/cached_UTF-8_del.kmap.gz
+console-setup/cached_Uni2-Fixed16.psf.gz
+console-setup/cached_setup_font.sh
+console-setup/cached_setup_keyboard.sh
+console-setup/cached_setup_terminal.sh
+console-setup/compose.ARMSCII-8.inc
+console-setup/compose.CP1251.inc
+console-setup/compose.CP1255.inc
+console-setup/compose.CP1256.inc
+console-setup/compose.GEORGIAN-ACADEMY.inc
+console-setup/compose.GEORGIAN-PS.inc
+console-setup/compose.IBM1133.inc
+console-setup/compose.ISIRI-3342.inc
+console-setup/compose.ISO-8859-1.inc
+console-setup/compose.ISO-8859-10.inc
+console-setup/compose.ISO-8859-11.inc
+console-setup/compose.ISO-8859-13.inc
+console-setup/compose.ISO-8859-14.inc
+console-setup/compose.ISO-8859-15.inc
+console-setup/compose.ISO-8859-16.inc
+console-setup/compose.ISO-8859-2.inc
+console-setup/compose.ISO-8859-3.inc
+console-setup/compose.ISO-8859-4.inc
+console-setup/compose.ISO-8859-5.inc
+console-setup/compose.ISO-8859-6.inc
+console-setup/compose.ISO-8859-7.inc
+console-setup/compose.ISO-8859-8.inc
+console-setup/compose.ISO-8859-9.inc
+console-setup/compose.KOI8-R.inc
+console-setup/compose.KOI8-U.inc
+console-setup/compose.TIS-620.inc
+console-setup/compose.VISCII.inc
+console-setup/remap.inc
+console-setup/vtrgb
+console-setup/vtrgb.vga
+credstore.encrypted/
+credstore/
+cron.d/
+cron.d/.placeholder
+cron.d/e2scrub_all
+cron.d/sysstat
+cron.daily/
+cron.daily/.placeholder
+cron.daily/apport
+cron.daily/apt-compat
+cron.daily/dpkg
+cron.daily/logrotate
+cron.daily/man-db
+cron.daily/sysstat
+cron.hourly/
+cron.hourly/.placeholder
+cron.monthly/
+cron.monthly/.placeholder
+cron.weekly/
+cron.weekly/.placeholder
+cron.weekly/man-db
+cron.yearly/
+cron.yearly/.placeholder
+cryptsetup-initramfs/
+cryptsetup-initramfs/conf-hook
+dbus-1/
+dbus-1/session.d/
+dbus-1/system.d/
+dbus-1/system.d/com.ubuntu.SoftwareProperties.conf
+default/
+default/amd64-microcode
+default/apport
+default/console-setup
+default/cron
+default/cryptdisks
+default/dbus
+default/grub
+default/grub.ucf-dist
+default/intel-microcode
+default/keyboard
+default/locale -> ../locale.conf
+default/mdadm
+default/motd-news
+default/networkd-dispatcher
+default/open-iscsi
+default/pollinate
+default/rsync
+default/ssh
+default/sysstat
+default/ufw
+default/useradd
+default/grub.d/
+depmod.d/
+depmod.d/ubuntu.conf
+dhcp/
+dhcp/dhclient-exit-hooks.d/
+dhcp/dhclient-exit-hooks.d/timesyncd
+dpkg/
+dpkg/dpkg.cfg
+dpkg/dpkg.cfg.d/
+dpkg/dpkg.cfg.d/needrestart
+dpkg/origins/
+dpkg/origins/debian
+dpkg/origins/default -> ubuntu
+dpkg/origins/ubuntu
+fonts/
+fonts/fonts.conf
+fonts/conf.avail/
+fonts/conf.avail/20-unhint-small-dejavu-lgc-sans-mono.conf
+fonts/conf.avail/20-unhint-small-dejavu-lgc-sans.conf
+fonts/conf.avail/20-unhint-small-dejavu-lgc-serif.conf
+fonts/conf.avail/20-unhint-small-dejavu-sans-mono.conf
+fonts/conf.avail/20-unhint-small-dejavu-sans.conf
+fonts/conf.avail/20-unhint-small-dejavu-serif.conf
+fonts/conf.avail/57-dejavu-sans-mono.conf
+fonts/conf.avail/57-dejavu-sans.conf
+fonts/conf.avail/57-dejavu-serif.conf
+fonts/conf.avail/58-dejavu-lgc-sans-mono.conf
+fonts/conf.avail/58-dejavu-lgc-sans.conf
+fonts/conf.avail/58-dejavu-lgc-serif.conf
+fonts/conf.d/
+fonts/conf.d/10-hinting-slight.conf -> /usr/share/fontconfig/conf.avail/10-hinting-slight.conf
+fonts/conf.d/10-scale-bitmap-fonts.conf -> /usr/share/fontconfig/conf.avail/10-scale-bitmap-fonts.conf
+fonts/conf.d/10-sub-pixel-rgb.conf -> /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf
+fonts/conf.d/10-yes-antialias.conf -> /usr/share/fontconfig/conf.avail/10-yes-antialias.conf
+fonts/conf.d/11-lcdfilter-default.conf -> /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf
+fonts/conf.d/20-unhint-small-dejavu-lgc-sans-mono.conf -> ../conf.avail/20-unhint-small-dejavu-lgc-sans-mono.conf
+fonts/conf.d/20-unhint-small-dejavu-lgc-sans.conf -> ../conf.avail/20-unhint-small-dejavu-lgc-sans.conf
+fonts/conf.d/20-unhint-small-dejavu-lgc-serif.conf -> ../conf.avail/20-unhint-small-dejavu-lgc-serif.conf
+fonts/conf.d/20-unhint-small-dejavu-sans-mono.conf -> ../conf.avail/20-unhint-small-dejavu-sans-mono.conf
+fonts/conf.d/20-unhint-small-dejavu-sans.conf -> ../conf.avail/20-unhint-small-dejavu-sans.conf
+fonts/conf.d/20-unhint-small-dejavu-serif.conf -> ../conf.avail/20-unhint-small-dejavu-serif.conf
+fonts/conf.d/20-unhint-small-vera.conf -> /usr/share/fontconfig/conf.avail/20-unhint-small-vera.conf
+fonts/conf.d/30-metric-aliases.conf -> /usr/share/fontconfig/conf.avail/30-metric-aliases.conf
+fonts/conf.d/40-nonlatin.conf -> /usr/share/fontconfig/conf.avail/40-nonlatin.conf
+fonts/conf.d/45-generic.conf -> /usr/share/fontconfig/conf.avail/45-generic.conf
+fonts/conf.d/45-latin.conf -> /usr/share/fontconfig/conf.avail/45-latin.conf
+fonts/conf.d/48-spacing.conf -> /usr/share/fontconfig/conf.avail/48-spacing.conf
+fonts/conf.d/49-sansserif.conf -> /usr/share/fontconfig/conf.avail/49-sansserif.conf
+fonts/conf.d/50-user.conf -> /usr/share/fontconfig/conf.avail/50-user.conf
+fonts/conf.d/51-local.conf -> /usr/share/fontconfig/conf.avail/51-local.conf
+fonts/conf.d/57-dejavu-sans-mono.conf -> ../conf.avail/57-dejavu-sans-mono.conf
+fonts/conf.d/57-dejavu-sans.conf -> ../conf.avail/57-dejavu-sans.conf
+fonts/conf.d/57-dejavu-serif.conf -> ../conf.avail/57-dejavu-serif.conf
+fonts/conf.d/58-dejavu-lgc-sans-mono.conf -> ../conf.avail/58-dejavu-lgc-sans-mono.conf
+fonts/conf.d/58-dejavu-lgc-sans.conf -> ../conf.avail/58-dejavu-lgc-sans.conf
+fonts/conf.d/58-dejavu-lgc-serif.conf -> ../conf.avail/58-dejavu-lgc-serif.conf
+fonts/conf.d/60-generic.conf -> /usr/share/fontconfig/conf.avail/60-generic.conf
+fonts/conf.d/60-latin.conf -> /usr/share/fontconfig/conf.avail/60-latin.conf
+fonts/conf.d/65-fonts-persian.conf -> /usr/share/fontconfig/conf.avail/65-fonts-persian.conf
+fonts/conf.d/65-nonlatin.conf -> /usr/share/fontconfig/conf.avail/65-nonlatin.conf
+fonts/conf.d/69-unifont.conf -> /usr/share/fontconfig/conf.avail/69-unifont.conf
+fonts/conf.d/70-no-bitmaps-except-emoji.conf -> /usr/share/fontconfig/conf.avail/70-no-bitmaps-except-emoji.conf
+fonts/conf.d/80-delicious.conf -> /usr/share/fontconfig/conf.avail/80-delicious.conf
+fonts/conf.d/90-synthetic.conf -> /usr/share/fontconfig/conf.avail/90-synthetic.conf
+fonts/conf.d/README
+fwupd/
+fwupd/fwupd.conf
+fwupd/bios-settings.d/
+fwupd/bios-settings.d/README.md
+fwupd/remotes.d/
+fwupd/remotes.d/lvfs-testing.conf
+fwupd/remotes.d/lvfs.conf
+fwupd/remotes.d/vendor-directory.conf
+gnutls/
+gnutls/config
+groff/
+groff/man.local
+groff/mdoc.local
+grub.d/
+grub.d/00_header
+grub.d/05_debian_theme
+grub.d/10_linux
+grub.d/10_linux_zfs
+grub.d/20_linux_xen
+grub.d/25_bli
+grub.d/30_os-prober
+grub.d/30_uefi-firmware
+grub.d/35_fwupd
+grub.d/40_custom
+grub.d/41_custom
+grub.d/README
+gss/
+gss/mech.d/
+init.d/
+init.d/apparmor
+init.d/apport
+init.d/console-setup.sh
+init.d/cron
+init.d/cryptdisks
+init.d/cryptdisks-early
+init.d/dbus
+init.d/grub-common
+init.d/iscsid
+init.d/keyboard-setup.sh
+init.d/kmod
+init.d/open-iscsi
+init.d/open-vm-tools
+init.d/plymouth
+init.d/plymouth-log
+init.d/procps
+init.d/qemu-guest-agent
+init.d/rsync
+init.d/screen-cleanup
+init.d/ssh
+init.d/sysstat
+init.d/ufw
+init.d/unattended-upgrades
+init.d/uuidd
+initramfs-tools/
+initramfs-tools/initramfs.conf
+initramfs-tools/modules
+initramfs-tools/update-initramfs.conf
+initramfs-tools/conf.d/
+initramfs-tools/hooks/
+initramfs-tools/scripts/
+initramfs-tools/scripts/init-bottom/
+initramfs-tools/scripts/init-premount/
+initramfs-tools/scripts/init-top/
+initramfs-tools/scripts/local-bottom/
+initramfs-tools/scripts/local-premount/
+initramfs-tools/scripts/local-top/
+initramfs-tools/scripts/nfs-bottom/
+initramfs-tools/scripts/nfs-premount/
+initramfs-tools/scripts/nfs-top/
+initramfs-tools/scripts/panic/
+iproute2/
+iproute2/bpf_pinning
+iproute2/ematch_map
+iproute2/group
+iproute2/nl_protos
+iproute2/rt_dsfield
+iproute2/rt_protos
+iproute2/rt_realms
+iproute2/rt_scopes
+iproute2/rt_tables
+iproute2/rt_protos.d/
+iproute2/rt_protos.d/README
+iproute2/rt_tables.d/
+iproute2/rt_tables.d/README
+iscsi/
+iscsi/initiatorname.iscsi
+iscsi/iscsid.conf
+kernel/
+kernel/install.d/
+kernel/postinst.d/
+kernel/postinst.d/initramfs-tools
+kernel/postinst.d/unattended-upgrades
+kernel/postinst.d/update-notifier -> /usr/share/update-notifier/notify-reboot-required
+kernel/postinst.d/xx-update-initrd-links
+kernel/postinst.d/zz-update-grub
+kernel/postrm.d/
+kernel/postrm.d/initramfs-tools
+kernel/postrm.d/zz-update-grub
+kernel/preinst.d/
+kernel/preinst.d/intel-microcode
+landscape/
+ld.so.conf.d/
+ld.so.conf.d/libc.conf
+ld.so.conf.d/x86_64-linux-gnu.conf
+ldap/
+ldap/ldap.conf
+libblockdev/
+libblockdev/3/
+libblockdev/3/conf.d/
+libblockdev/3/conf.d/00-default.cfg
+libibverbs.d/
+libibverbs.d/bnxt_re.driver
+libibverbs.d/cxgb4.driver
+libibverbs.d/efa.driver
+libibverbs.d/erdma.driver
+libibverbs.d/hfi1verbs.driver
+libibverbs.d/hns.driver
+libibverbs.d/ipathverbs.driver
+libibverbs.d/irdma.driver
+libibverbs.d/mana.driver
+libibverbs.d/mlx4.driver
+libibverbs.d/mlx5.driver
+libibverbs.d/mthca.driver
+libibverbs.d/ocrdma.driver
+libibverbs.d/qedr.driver
+libibverbs.d/rxe.driver
+libibverbs.d/siw.driver
+libibverbs.d/vmw_pvrdma.driver
+libnl-3/
+libnl-3/classid
+libnl-3/pktloc
+logcheck/
+logcheck/ignore.d.server/
+logcheck/ignore.d.server/gpg-agent
+logcheck/ignore.d.server/mdadm
+logcheck/ignore.d.server/rsyslog
+logcheck/violations.d/
+logcheck/violations.d/mdadm
+logrotate.d/
+logrotate.d/alternatives
+logrotate.d/apport
+logrotate.d/apt
+logrotate.d/bootlog
+logrotate.d/btmp
+logrotate.d/cloud-init
+logrotate.d/dpkg
+logrotate.d/rsyslog
+logrotate.d/ubuntu-pro-client
+logrotate.d/ufw
+logrotate.d/unattended-upgrades
+logrotate.d/wtmp
+lvm/
+lvm/lvm.conf
+lvm/lvmlocal.conf
+lvm/backup/
+lvm/backup/ubuntu-vg
+lvm/profile/
+lvm/profile/cache-mq.profile
+lvm/profile/cache-smq.profile
+lvm/profile/command_profile_template.profile
+lvm/profile/lvmdbusd.profile
+lvm/profile/metadata_profile_template.profile
+lvm/profile/thin-generic.profile
+lvm/profile/thin-performance.profile
+lvm/profile/vdo-small.profile
+mdadm/
+mdadm/mdadm.conf
+modprobe.d/
+modprobe.d/amd64-microcode-blacklist.conf
+modprobe.d/blacklist-ath_pci.conf
+modprobe.d/blacklist-firewire.conf
+modprobe.d/blacklist-framebuffer.conf
+modprobe.d/blacklist-rare-network.conf
+modprobe.d/blacklist.conf
+modprobe.d/intel-microcode-blacklist.conf
+modprobe.d/iwlwifi.conf
+modprobe.d/mdadm.conf
+modules-load.d/
+modules-load.d/modules.conf -> ../modules
+multipath/
+multipath/bindings
+multipath/wwids
+needrestart/
+needrestart/iucode.sh
+needrestart/needrestart.conf
+needrestart/notify.conf
+needrestart/conf.d/
+needrestart/conf.d/README.needrestart
+needrestart/hook.d/
+needrestart/hook.d/10-dpkg
+needrestart/hook.d/20-rpm
+needrestart/hook.d/90-none
+needrestart/notify.d/
+needrestart/notify.d/200-write
+needrestart/notify.d/400-notify-send
+needrestart/notify.d/600-mail
+needrestart/notify.d/README.needrestart
+needrestart/restart.d/
+needrestart/restart.d/README.needrestart
+needrestart/restart.d/dbus.service
+needrestart/restart.d/systemd-manager
+needrestart/restart.d/sysv-init
+netplan/
+netplan/50-cloud-init.yaml
+network/
+network/if-pre-up.d/
+network/if-pre-up.d/ethtool
+network/if-up.d/
+network/if-up.d/ethtool
+networkd-dispatcher/
+networkd-dispatcher/carrier.d/
+networkd-dispatcher/degraded.d/
+networkd-dispatcher/dormant.d/
+networkd-dispatcher/no-carrier.d/
+networkd-dispatcher/off.d/
+networkd-dispatcher/routable.d/
+newt/
+newt/palette -> /etc/alternatives/newt-palette
+newt/palette.original
+newt/palette.ubuntu
+opt/
+pam.d/
+pam.d/chfn
+pam.d/chpasswd
+pam.d/chsh
+pam.d/common-account
+pam.d/common-auth
+pam.d/common-password
+pam.d/common-session
+pam.d/common-session-noninteractive
+pam.d/cron
+pam.d/login
+pam.d/newusers
+pam.d/other
+pam.d/passwd
+pam.d/runuser
+pam.d/runuser-l
+pam.d/sshd
+pam.d/su
+pam.d/su-l
+pam.d/sudo
+pam.d/sudo-i
+pam.d/vmtoolsd
+perl/
+perl/Net/
+perl/Net/libnet.cfg
+pki/
+pki/fwupd-metadata/
+pki/fwupd-metadata/GPG-KEY-Linux-Foundation-Metadata
+pki/fwupd-metadata/GPG-KEY-Linux-Vendor-Firmware-Service
+pki/fwupd-metadata/LVFS-CA.pem
+pki/fwupd/
+pki/fwupd/GPG-KEY-Linux-Foundation-Firmware
+pki/fwupd/GPG-KEY-Linux-Vendor-Firmware-Service
+pki/fwupd/LVFS-CA.pem
+plymouth/
+pm/
+pm/sleep.d/
+pm/sleep.d/10_grub-common
+pm/sleep.d/10_unattended-upgrades-hibernate
+polkit-1/
+polkit-1/rules.d/
+pollinate/
+pollinate/add-user-agent
+pollinate/entropy.ubuntu.com.pem
+profile.d/
+profile.d/01-locale-fix.sh
+profile.d/Z97-byobu.sh
+profile.d/Z99-cloud-locale-test.sh
+profile.d/Z99-cloudinit-warnings.sh
+profile.d/apps-bin-path.sh
+profile.d/bash_completion.sh
+profile.d/gawk.csh
+profile.d/gawk.sh
+python3.12/
+python3.12/sitecustomize.py
+python3/
+python3/debian_config
+qemu/
+qemu/fsfreeze-hook
+qemu/fsfreeze-hook.d/
+rc0.d/
+rc0.d/K01cryptdisks -> ../init.d/cryptdisks
+rc0.d/K01cryptdisks-early -> ../init.d/cryptdisks-early
+rc0.d/K01iscsid -> ../init.d/iscsid
+rc0.d/K01open-iscsi -> ../init.d/open-iscsi
+rc0.d/K01open-vm-tools -> ../init.d/open-vm-tools
+rc0.d/K01plymouth -> ../init.d/plymouth
+rc0.d/K01qemu-guest-agent -> ../init.d/qemu-guest-agent
+rc0.d/K01unattended-upgrades -> ../init.d/unattended-upgrades
+rc0.d/K01uuidd -> ../init.d/uuidd
+rc1.d/
+rc1.d/K01iscsid -> ../init.d/iscsid
+rc1.d/K01open-iscsi -> ../init.d/open-iscsi
+rc1.d/K01open-vm-tools -> ../init.d/open-vm-tools
+rc1.d/K01qemu-guest-agent -> ../init.d/qemu-guest-agent
+rc1.d/K01ufw -> ../init.d/ufw
+rc1.d/K01uuidd -> ../init.d/uuidd
+rc2.d/
+rc2.d/S01apport -> ../init.d/apport
+rc2.d/S01console-setup.sh -> ../init.d/console-setup.sh
+rc2.d/S01cron -> ../init.d/cron
+rc2.d/S01dbus -> ../init.d/dbus
+rc2.d/S01grub-common -> ../init.d/grub-common
+rc2.d/S01open-vm-tools -> ../init.d/open-vm-tools
+rc2.d/S01plymouth -> ../init.d/plymouth
+rc2.d/S01qemu-guest-agent -> ../init.d/qemu-guest-agent
+rc2.d/S01rsync -> ../init.d/rsync
+rc2.d/S01ssh -> ../init.d/ssh
+rc2.d/S01sysstat -> ../init.d/sysstat
+rc2.d/S01unattended-upgrades -> ../init.d/unattended-upgrades
+rc2.d/S01uuidd -> ../init.d/uuidd
+rc3.d/
+rc3.d/S01apport -> ../init.d/apport
+rc3.d/S01console-setup.sh -> ../init.d/console-setup.sh
+rc3.d/S01cron -> ../init.d/cron
+rc3.d/S01dbus -> ../init.d/dbus
+rc3.d/S01grub-common -> ../init.d/grub-common
+rc3.d/S01open-vm-tools -> ../init.d/open-vm-tools
+rc3.d/S01plymouth -> ../init.d/plymouth
+rc3.d/S01qemu-guest-agent -> ../init.d/qemu-guest-agent
+rc3.d/S01rsync -> ../init.d/rsync
+rc3.d/S01ssh -> ../init.d/ssh
+rc3.d/S01sysstat -> ../init.d/sysstat
+rc3.d/S01unattended-upgrades -> ../init.d/unattended-upgrades
+rc3.d/S01uuidd -> ../init.d/uuidd
+rc4.d/
+rc4.d/S01apport -> ../init.d/apport
+rc4.d/S01console-setup.sh -> ../init.d/console-setup.sh
+rc4.d/S01cron -> ../init.d/cron
+rc4.d/S01dbus -> ../init.d/dbus
+rc4.d/S01grub-common -> ../init.d/grub-common
+rc4.d/S01open-vm-tools -> ../init.d/open-vm-tools
+rc4.d/S01plymouth -> ../init.d/plymouth
+rc4.d/S01qemu-guest-agent -> ../init.d/qemu-guest-agent
+rc4.d/S01rsync -> ../init.d/rsync
+rc4.d/S01ssh -> ../init.d/ssh
+rc4.d/S01sysstat -> ../init.d/sysstat
+rc4.d/S01unattended-upgrades -> ../init.d/unattended-upgrades
+rc4.d/S01uuidd -> ../init.d/uuidd
+rc5.d/
+rc5.d/S01apport -> ../init.d/apport
+rc5.d/S01console-setup.sh -> ../init.d/console-setup.sh
+rc5.d/S01cron -> ../init.d/cron
+rc5.d/S01dbus -> ../init.d/dbus
+rc5.d/S01grub-common -> ../init.d/grub-common
+rc5.d/S01open-vm-tools -> ../init.d/open-vm-tools
+rc5.d/S01plymouth -> ../init.d/plymouth
+rc5.d/S01qemu-guest-agent -> ../init.d/qemu-guest-agent
+rc5.d/S01rsync -> ../init.d/rsync
+rc5.d/S01ssh -> ../init.d/ssh
+rc5.d/S01sysstat -> ../init.d/sysstat
+rc5.d/S01unattended-upgrades -> ../init.d/unattended-upgrades
+rc5.d/S01uuidd -> ../init.d/uuidd
+rc6.d/
+rc6.d/K01cryptdisks -> ../init.d/cryptdisks
+rc6.d/K01cryptdisks-early -> ../init.d/cryptdisks-early
+rc6.d/K01iscsid -> ../init.d/iscsid
+rc6.d/K01open-iscsi -> ../init.d/open-iscsi
+rc6.d/K01open-vm-tools -> ../init.d/open-vm-tools
+rc6.d/K01plymouth -> ../init.d/plymouth
+rc6.d/K01qemu-guest-agent -> ../init.d/qemu-guest-agent
+rc6.d/K01unattended-upgrades -> ../init.d/unattended-upgrades
+rc6.d/K01uuidd -> ../init.d/uuidd
+rcS.d/
+rcS.d/K01iscsid -> ../init.d/iscsid
+rcS.d/K01open-iscsi -> ../init.d/open-iscsi
+rcS.d/S01apparmor -> ../init.d/apparmor
+rcS.d/S01cryptdisks -> ../init.d/cryptdisks
+rcS.d/S01cryptdisks-early -> ../init.d/cryptdisks-early
+rcS.d/S01keyboard-setup.sh -> ../init.d/keyboard-setup.sh
+rcS.d/S01kmod -> ../init.d/kmod
+rcS.d/S01plymouth-log -> ../init.d/plymouth-log
+rcS.d/S01procps -> ../init.d/procps
+rcS.d/S01screen-cleanup -> ../init.d/screen-cleanup
+rcS.d/S01ufw -> ../init.d/ufw
+rsyslog.d/
+rsyslog.d/20-ufw.conf
+rsyslog.d/21-cloudinit.conf
+rsyslog.d/50-default.conf
+security/
+security/access.conf
+security/capability.conf
+security/faillock.conf
+security/group.conf
+security/limits.conf
+security/namespace.conf
+security/namespace.init
+security/opasswd
+security/pam_env.conf
+security/pwhistory.conf
+security/sepermit.conf
+security/time.conf
+security/limits.d/
+security/namespace.d/
+selinux/
+selinux/semanage.conf
+sensors.d/
+sensors.d/.placeholder
+sgml/
+sgml/catalog -> /var/lib/sgml-base/supercatalog
+sgml/xml-core.cat
+skel/
+skel/.bash_logout
+skel/.bashrc
+skel/.profile
+sos/
+sos/sos.conf
+sos/cleaner/
+sos/extras.d/
+sos/groups.d/
+sos/presets.d/
+ssh/
+ssh/moduli
+ssh/ssh_config
+ssh/ssh_host_ecdsa_key
+ssh/ssh_host_ecdsa_key.pub
+ssh/ssh_host_ed25519_key
+ssh/ssh_host_ed25519_key.pub
+ssh/ssh_host_rsa_key
+ssh/ssh_host_rsa_key.pub
+ssh/ssh_import_id
+ssh/sshd_config
+ssh/ssh_config.d/
+ssh/sshd_config.d/
+ssh/sshd_config.d/50-cloud-init.conf
+ssl/
+ssl/openssl.cnf
+ssl/certs/
+ssl/certs/002c0b4f.0 -> GlobalSign_Root_R46.pem
+ssl/certs/0179095f.0 -> BJCA_Global_Root_CA1.pem
+ssl/certs/02265526.0 -> Entrust_Root_Certification_Authority_-_G2.pem
+ssl/certs/062cdee6.0 -> GlobalSign_Root_CA_-_R3.pem
+ssl/certs/064e0aa9.0 -> QuoVadis_Root_CA_2_G3.pem
+ssl/certs/06dc52d5.0 -> SSL.com_EV_Root_Certification_Authority_RSA_R2.pem
+ssl/certs/08063a00.0 -> Security_Communication_RootCA3.pem
+ssl/certs/09789157.0 -> Starfield_Services_Root_Certificate_Authority_-_G2.pem
+ssl/certs/0a775a30.0 -> GTS_Root_R3.pem
+ssl/certs/0b1b94ef.0 -> CFCA_EV_ROOT.pem
+ssl/certs/0b9bc432.0 -> ISRG_Root_X2.pem
+ssl/certs/0bf05006.0 -> SSL.com_Root_Certification_Authority_ECC.pem
+ssl/certs/0f5dc4f3.0 -> UCA_Extended_Validation_Root.pem
+ssl/certs/0f6fa695.0 -> GDCA_TrustAUTH_R5_ROOT.pem
+ssl/certs/1001acf7.0 -> GTS_Root_R1.pem
+ssl/certs/106f3e4d.0 -> Entrust_Root_Certification_Authority_-_EC1.pem
+ssl/certs/14bc7599.0 -> emSign_ECC_Root_CA_-_G3.pem
+ssl/certs/18856ac4.0 -> SecureSign_RootCA11.pem
+ssl/certs/1cef98f5.0 -> TrustAsia_Global_Root_CA_G4.pem
+ssl/certs/1d3472b9.0 -> GlobalSign_ECC_Root_CA_-_R5.pem
+ssl/certs/1e08bfd1.0 -> IdenTrust_Public_Sector_Root_CA_1.pem
+ssl/certs/1e09d511.0 -> T-TeleSec_GlobalRoot_Class_2.pem
+ssl/certs/228f89db.0 -> CommScope_Public_Trust_ECC_Root-01.pem
+ssl/certs/244b5494.0 -> DigiCert_High_Assurance_EV_Root_CA.pem
+ssl/certs/2923b3f9.0 -> emSign_Root_CA_-_G1.pem
+ssl/certs/2ae6433e.0 -> CA_Disig_Root_R2.pem
+ssl/certs/2b349938.0 -> AffirmTrust_Commercial.pem
+ssl/certs/32888f65.0 -> Hellenic_Academic_and_Research_Institutions_RootCA_2015.pem
+ssl/certs/3513523f.0 -> DigiCert_Global_Root_CA.pem
+ssl/certs/3bde41ac.0 -> Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068.pem
+ssl/certs/3e359ba6.0 -> BJCA_Global_Root_CA2.pem
+ssl/certs/3fb36b73.0 -> NAVER_Global_Root_Certification_Authority.pem
+ssl/certs/40193066.0 -> Certum_Trusted_Network_CA_2.pem
+ssl/certs/4042bcee.0 -> ISRG_Root_X1.pem
+ssl/certs/40547a79.0 -> COMODO_Certification_Authority.pem
+ssl/certs/406c9bb1.0 -> emSign_Root_CA_-_C1.pem
+ssl/certs/48bec511.0 -> Certum_Trusted_Network_CA.pem
+ssl/certs/4b718d9b.0 -> emSign_ECC_Root_CA_-_C3.pem
+ssl/certs/4bfab552.0 -> Starfield_Root_Certificate_Authority_-_G2.pem
+ssl/certs/4f316efb.0 -> SwissSign_Gold_CA_-_G2.pem
+ssl/certs/4fd49c6c.0 -> CommScope_Public_Trust_RSA_Root-02.pem
+ssl/certs/5443e9e3.0 -> T-TeleSec_GlobalRoot_Class_3.pem
+ssl/certs/54657681.0 -> Buypass_Class_2_Root_CA.pem
+ssl/certs/57bcb2da.0 -> SwissSign_Silver_CA_-_G2.pem
+ssl/certs/5860aaa6.0 -> Security_Communication_ECC_RootCA1.pem
+ssl/certs/5931b5bc.0 -> D-TRUST_EV_Root_CA_1_2020.pem
+ssl/certs/5ad8a5d6.0 -> GlobalSign_Root_CA.pem
+ssl/certs/5cd81ad7.0 -> TeliaSonera_Root_CA_v1.pem
+ssl/certs/5e98733a.0 -> Entrust_Root_Certification_Authority_-_G4.pem
+ssl/certs/5f15c80c.0 -> TWCA_Global_Root_CA.pem
+ssl/certs/5f618aec.0 -> certSIGN_Root_CA_G2.pem
+ssl/certs/607986c7.0 -> DigiCert_Global_Root_G2.pem
+ssl/certs/626dceaf.0 -> GTS_Root_R2.pem
+ssl/certs/653b494a.0 -> Baltimore_CyberTrust_Root.pem
+ssl/certs/68dd7389.0 -> Hongkong_Post_Root_CA_3.pem
+ssl/certs/6b99d060.0 -> Entrust_Root_Certification_Authority.pem
+ssl/certs/6d41d539.0 -> Amazon_Root_CA_2.pem
+ssl/certs/6fa5da56.0 -> SSL.com_Root_Certification_Authority_RSA.pem
+ssl/certs/706f604c.0 -> XRamp_Global_CA_Root.pem
+ssl/certs/749e9e03.0 -> QuoVadis_Root_CA_1_G3.pem
+ssl/certs/75d1b2ed.0 -> DigiCert_Trusted_Root_G4.pem
+ssl/certs/76faf6c0.0 -> QuoVadis_Root_CA_3.pem
+ssl/certs/7719f463.0 -> Hellenic_Academic_and_Research_Institutions_ECC_RootCA_2015.pem
+ssl/certs/773e07ad.0 -> OISTE_WISeKey_Global_Root_GC_CA.pem
+ssl/certs/7a3adc42.0 -> vTrus_Root_CA.pem
+ssl/certs/7a780d93.0 -> Certainly_Root_R1.pem
+ssl/certs/7f3d5d1d.0 -> DigiCert_Assured_ID_Root_G3.pem
+ssl/certs/8160b96c.0 -> Microsec_e-Szigno_Root_CA_2009.pem
+ssl/certs/81f2d2b1.0 -> CommScope_Public_Trust_ECC_Root-02.pem
+ssl/certs/8312c4c1.0 -> CommScope_Public_Trust_RSA_Root-01.pem
+ssl/certs/8508e720.0 -> Certainly_Root_E1.pem
+ssl/certs/865fbdf9.0 -> SSL.com_TLS_ECC_Root_CA_2022.pem
+ssl/certs/8cb5ee0f.0 -> Amazon_Root_CA_3.pem
+ssl/certs/8d86cdd1.0 -> certSIGN_ROOT_CA.pem
+ssl/certs/8d89cda1.0 -> Microsoft_ECC_Root_Certificate_Authority_2017.pem
+ssl/certs/8f103249.0 -> Telia_Root_CA_v2.pem
+ssl/certs/9046744a.0 -> Sectigo_Public_Server_Authentication_Root_R46.pem
+ssl/certs/90c5a3c8.0 -> HiPKI_Root_CA_-_G1.pem
+ssl/certs/930ac5d2.0 -> Actalis_Authentication_Root_CA.pem
+ssl/certs/93bc0acc.0 -> AffirmTrust_Networking.pem
+ssl/certs/9482e63a.0 -> Certum_EC-384_CA.pem
+ssl/certs/9846683b.0 -> DigiCert_TLS_ECC_P384_Root_G5.pem
+ssl/certs/988a38cb.0 -> NetLock_Arany_=Class_Gold=_Főtanúsítvány.pem
+ssl/certs/9b46e03d.0 -> Atos_TrustedRoot_Root_CA_RSA_TLS_2021.pem
+ssl/certs/9b5697b0.0 -> Trustwave_Global_ECC_P256_Certification_Authority.pem
+ssl/certs/9bf03295.0 -> TrustAsia_Global_Root_CA_G3.pem
+ssl/certs/9c8dfbd4.0 -> AffirmTrust_Premium_ECC.pem
+ssl/certs/9d04f354.0 -> DigiCert_Assured_ID_Root_G2.pem
+ssl/certs/9ef4a08a.0 -> D-TRUST_BR_Root_CA_1_2020.pem
+ssl/certs/9f727ac7.0 -> HARICA_TLS_RSA_Root_CA_2021.pem
+ssl/certs/ACCVRAIZ1.pem -> /usr/share/ca-certificates/mozilla/ACCVRAIZ1.crt
+ssl/certs/AC_RAIZ_FNMT-RCM.pem -> /usr/share/ca-certificates/mozilla/AC_RAIZ_FNMT-RCM.crt
+ssl/certs/AC_RAIZ_FNMT-RCM_SERVIDORES_SEGUROS.pem -> /usr/share/ca-certificates/mozilla/AC_RAIZ_FNMT-RCM_SERVIDORES_SEGUROS.crt
+ssl/certs/ANF_Secure_Server_Root_CA.pem -> /usr/share/ca-certificates/mozilla/ANF_Secure_Server_Root_CA.crt
+ssl/certs/Actalis_Authentication_Root_CA.pem -> /usr/share/ca-certificates/mozilla/Actalis_Authentication_Root_CA.crt
+ssl/certs/AffirmTrust_Commercial.pem -> /usr/share/ca-certificates/mozilla/AffirmTrust_Commercial.crt
+ssl/certs/AffirmTrust_Networking.pem -> /usr/share/ca-certificates/mozilla/AffirmTrust_Networking.crt
+ssl/certs/AffirmTrust_Premium.pem -> /usr/share/ca-certificates/mozilla/AffirmTrust_Premium.crt
+ssl/certs/AffirmTrust_Premium_ECC.pem -> /usr/share/ca-certificates/mozilla/AffirmTrust_Premium_ECC.crt
+ssl/certs/Amazon_Root_CA_1.pem -> /usr/share/ca-certificates/mozilla/Amazon_Root_CA_1.crt
+ssl/certs/Amazon_Root_CA_2.pem -> /usr/share/ca-certificates/mozilla/Amazon_Root_CA_2.crt
+ssl/certs/Amazon_Root_CA_3.pem -> /usr/share/ca-certificates/mozilla/Amazon_Root_CA_3.crt
+ssl/certs/Amazon_Root_CA_4.pem -> /usr/share/ca-certificates/mozilla/Amazon_Root_CA_4.crt
+ssl/certs/Atos_TrustedRoot_2011.pem -> /usr/share/ca-certificates/mozilla/Atos_TrustedRoot_2011.crt
+ssl/certs/Atos_TrustedRoot_Root_CA_ECC_TLS_2021.pem -> /usr/share/ca-certificates/mozilla/Atos_TrustedRoot_Root_CA_ECC_TLS_2021.crt
+ssl/certs/Atos_TrustedRoot_Root_CA_RSA_TLS_2021.pem -> /usr/share/ca-certificates/mozilla/Atos_TrustedRoot_Root_CA_RSA_TLS_2021.crt
+ssl/certs/Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068.pem -> /usr/share/ca-certificates/mozilla/Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068.crt
+ssl/certs/BJCA_Global_Root_CA1.pem -> /usr/share/ca-certificates/mozilla/BJCA_Global_Root_CA1.crt
+ssl/certs/BJCA_Global_Root_CA2.pem -> /usr/share/ca-certificates/mozilla/BJCA_Global_Root_CA2.crt
+ssl/certs/Baltimore_CyberTrust_Root.pem -> /usr/share/ca-certificates/mozilla/Baltimore_CyberTrust_Root.crt
+ssl/certs/Buypass_Class_2_Root_CA.pem -> /usr/share/ca-certificates/mozilla/Buypass_Class_2_Root_CA.crt
+ssl/certs/Buypass_Class_3_Root_CA.pem -> /usr/share/ca-certificates/mozilla/Buypass_Class_3_Root_CA.crt
+ssl/certs/CA_Disig_Root_R2.pem -> /usr/share/ca-certificates/mozilla/CA_Disig_Root_R2.crt
+ssl/certs/CFCA_EV_ROOT.pem -> /usr/share/ca-certificates/mozilla/CFCA_EV_ROOT.crt
+ssl/certs/COMODO_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/COMODO_Certification_Authority.crt
+ssl/certs/COMODO_ECC_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/COMODO_ECC_Certification_Authority.crt
+ssl/certs/COMODO_RSA_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/COMODO_RSA_Certification_Authority.crt
+ssl/certs/Certainly_Root_E1.pem -> /usr/share/ca-certificates/mozilla/Certainly_Root_E1.crt
+ssl/certs/Certainly_Root_R1.pem -> /usr/share/ca-certificates/mozilla/Certainly_Root_R1.crt
+ssl/certs/Certigna.pem -> /usr/share/ca-certificates/mozilla/Certigna.crt
+ssl/certs/Certigna_Root_CA.pem -> /usr/share/ca-certificates/mozilla/Certigna_Root_CA.crt
+ssl/certs/Certum_EC-384_CA.pem -> /usr/share/ca-certificates/mozilla/Certum_EC-384_CA.crt
+ssl/certs/Certum_Trusted_Network_CA.pem -> /usr/share/ca-certificates/mozilla/Certum_Trusted_Network_CA.crt
+ssl/certs/Certum_Trusted_Network_CA_2.pem -> /usr/share/ca-certificates/mozilla/Certum_Trusted_Network_CA_2.crt
+ssl/certs/Certum_Trusted_Root_CA.pem -> /usr/share/ca-certificates/mozilla/Certum_Trusted_Root_CA.crt
+ssl/certs/CommScope_Public_Trust_ECC_Root-01.pem -> /usr/share/ca-certificates/mozilla/CommScope_Public_Trust_ECC_Root-01.crt
+ssl/certs/CommScope_Public_Trust_ECC_Root-02.pem -> /usr/share/ca-certificates/mozilla/CommScope_Public_Trust_ECC_Root-02.crt
+ssl/certs/CommScope_Public_Trust_RSA_Root-01.pem -> /usr/share/ca-certificates/mozilla/CommScope_Public_Trust_RSA_Root-01.crt
+ssl/certs/CommScope_Public_Trust_RSA_Root-02.pem -> /usr/share/ca-certificates/mozilla/CommScope_Public_Trust_RSA_Root-02.crt
+ssl/certs/Comodo_AAA_Services_root.pem -> /usr/share/ca-certificates/mozilla/Comodo_AAA_Services_root.crt
+ssl/certs/D-TRUST_BR_Root_CA_1_2020.pem -> /usr/share/ca-certificates/mozilla/D-TRUST_BR_Root_CA_1_2020.crt
+ssl/certs/D-TRUST_EV_Root_CA_1_2020.pem -> /usr/share/ca-certificates/mozilla/D-TRUST_EV_Root_CA_1_2020.crt
+ssl/certs/D-TRUST_Root_Class_3_CA_2_2009.pem -> /usr/share/ca-certificates/mozilla/D-TRUST_Root_Class_3_CA_2_2009.crt
+ssl/certs/D-TRUST_Root_Class_3_CA_2_EV_2009.pem -> /usr/share/ca-certificates/mozilla/D-TRUST_Root_Class_3_CA_2_EV_2009.crt
+ssl/certs/DigiCert_Assured_ID_Root_CA.pem -> /usr/share/ca-certificates/mozilla/DigiCert_Assured_ID_Root_CA.crt
+ssl/certs/DigiCert_Assured_ID_Root_G2.pem -> /usr/share/ca-certificates/mozilla/DigiCert_Assured_ID_Root_G2.crt
+ssl/certs/DigiCert_Assured_ID_Root_G3.pem -> /usr/share/ca-certificates/mozilla/DigiCert_Assured_ID_Root_G3.crt
+ssl/certs/DigiCert_Global_Root_CA.pem -> /usr/share/ca-certificates/mozilla/DigiCert_Global_Root_CA.crt
+ssl/certs/DigiCert_Global_Root_G2.pem -> /usr/share/ca-certificates/mozilla/DigiCert_Global_Root_G2.crt
+ssl/certs/DigiCert_Global_Root_G3.pem -> /usr/share/ca-certificates/mozilla/DigiCert_Global_Root_G3.crt
+ssl/certs/DigiCert_High_Assurance_EV_Root_CA.pem -> /usr/share/ca-certificates/mozilla/DigiCert_High_Assurance_EV_Root_CA.crt
+ssl/certs/DigiCert_TLS_ECC_P384_Root_G5.pem -> /usr/share/ca-certificates/mozilla/DigiCert_TLS_ECC_P384_Root_G5.crt
+ssl/certs/DigiCert_TLS_RSA4096_Root_G5.pem -> /usr/share/ca-certificates/mozilla/DigiCert_TLS_RSA4096_Root_G5.crt
+ssl/certs/DigiCert_Trusted_Root_G4.pem -> /usr/share/ca-certificates/mozilla/DigiCert_Trusted_Root_G4.crt
+ssl/certs/Entrust.net_Premium_2048_Secure_Server_CA.pem -> /usr/share/ca-certificates/mozilla/Entrust.net_Premium_2048_Secure_Server_CA.crt
+ssl/certs/Entrust_Root_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/Entrust_Root_Certification_Authority.crt
+ssl/certs/Entrust_Root_Certification_Authority_-_EC1.pem -> /usr/share/ca-certificates/mozilla/Entrust_Root_Certification_Authority_-_EC1.crt
+ssl/certs/Entrust_Root_Certification_Authority_-_G2.pem -> /usr/share/ca-certificates/mozilla/Entrust_Root_Certification_Authority_-_G2.crt
+ssl/certs/Entrust_Root_Certification_Authority_-_G4.pem -> /usr/share/ca-certificates/mozilla/Entrust_Root_Certification_Authority_-_G4.crt
+ssl/certs/GDCA_TrustAUTH_R5_ROOT.pem -> /usr/share/ca-certificates/mozilla/GDCA_TrustAUTH_R5_ROOT.crt
+ssl/certs/GLOBALTRUST_2020.pem -> /usr/share/ca-certificates/mozilla/GLOBALTRUST_2020.crt
+ssl/certs/GTS_Root_R1.pem -> /usr/share/ca-certificates/mozilla/GTS_Root_R1.crt
+ssl/certs/GTS_Root_R2.pem -> /usr/share/ca-certificates/mozilla/GTS_Root_R2.crt
+ssl/certs/GTS_Root_R3.pem -> /usr/share/ca-certificates/mozilla/GTS_Root_R3.crt
+ssl/certs/GTS_Root_R4.pem -> /usr/share/ca-certificates/mozilla/GTS_Root_R4.crt
+ssl/certs/GlobalSign_ECC_Root_CA_-_R4.pem -> /usr/share/ca-certificates/mozilla/GlobalSign_ECC_Root_CA_-_R4.crt
+ssl/certs/GlobalSign_ECC_Root_CA_-_R5.pem -> /usr/share/ca-certificates/mozilla/GlobalSign_ECC_Root_CA_-_R5.crt
+ssl/certs/GlobalSign_Root_CA.pem -> /usr/share/ca-certificates/mozilla/GlobalSign_Root_CA.crt
+ssl/certs/GlobalSign_Root_CA_-_R3.pem -> /usr/share/ca-certificates/mozilla/GlobalSign_Root_CA_-_R3.crt
+ssl/certs/GlobalSign_Root_CA_-_R6.pem -> /usr/share/ca-certificates/mozilla/GlobalSign_Root_CA_-_R6.crt
+ssl/certs/GlobalSign_Root_E46.pem -> /usr/share/ca-certificates/mozilla/GlobalSign_Root_E46.crt
+ssl/certs/GlobalSign_Root_R46.pem -> /usr/share/ca-certificates/mozilla/GlobalSign_Root_R46.crt
+ssl/certs/Go_Daddy_Class_2_CA.pem -> /usr/share/ca-certificates/mozilla/Go_Daddy_Class_2_CA.crt
+ssl/certs/Go_Daddy_Root_Certificate_Authority_-_G2.pem -> /usr/share/ca-certificates/mozilla/Go_Daddy_Root_Certificate_Authority_-_G2.crt
+ssl/certs/HARICA_TLS_ECC_Root_CA_2021.pem -> /usr/share/ca-certificates/mozilla/HARICA_TLS_ECC_Root_CA_2021.crt
+ssl/certs/HARICA_TLS_RSA_Root_CA_2021.pem -> /usr/share/ca-certificates/mozilla/HARICA_TLS_RSA_Root_CA_2021.crt
+ssl/certs/Hellenic_Academic_and_Research_Institutions_ECC_RootCA_2015.pem -> /usr/share/ca-certificates/mozilla/Hellenic_Academic_and_Research_Institutions_ECC_RootCA_2015.crt
+ssl/certs/Hellenic_Academic_and_Research_Institutions_RootCA_2015.pem -> /usr/share/ca-certificates/mozilla/Hellenic_Academic_and_Research_Institutions_RootCA_2015.crt
+ssl/certs/HiPKI_Root_CA_-_G1.pem -> /usr/share/ca-certificates/mozilla/HiPKI_Root_CA_-_G1.crt
+ssl/certs/Hongkong_Post_Root_CA_3.pem -> /usr/share/ca-certificates/mozilla/Hongkong_Post_Root_CA_3.crt
+ssl/certs/ISRG_Root_X1.pem -> /usr/share/ca-certificates/mozilla/ISRG_Root_X1.crt
+ssl/certs/ISRG_Root_X2.pem -> /usr/share/ca-certificates/mozilla/ISRG_Root_X2.crt
+ssl/certs/IdenTrust_Commercial_Root_CA_1.pem -> /usr/share/ca-certificates/mozilla/IdenTrust_Commercial_Root_CA_1.crt
+ssl/certs/IdenTrust_Public_Sector_Root_CA_1.pem -> /usr/share/ca-certificates/mozilla/IdenTrust_Public_Sector_Root_CA_1.crt
+ssl/certs/Izenpe.com.pem -> /usr/share/ca-certificates/mozilla/Izenpe.com.crt
+ssl/certs/Microsec_e-Szigno_Root_CA_2009.pem -> /usr/share/ca-certificates/mozilla/Microsec_e-Szigno_Root_CA_2009.crt
+ssl/certs/Microsoft_ECC_Root_Certificate_Authority_2017.pem -> /usr/share/ca-certificates/mozilla/Microsoft_ECC_Root_Certificate_Authority_2017.crt
+ssl/certs/Microsoft_RSA_Root_Certificate_Authority_2017.pem -> /usr/share/ca-certificates/mozilla/Microsoft_RSA_Root_Certificate_Authority_2017.crt
+ssl/certs/NAVER_Global_Root_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/NAVER_Global_Root_Certification_Authority.crt
+ssl/certs/NetLock_Arany_=Class_Gold=_Főtanúsítvány.pem -> /usr/share/ca-certificates/mozilla/NetLock_Arany_=Class_Gold=_Főtanúsítvány.crt
+ssl/certs/OISTE_WISeKey_Global_Root_GB_CA.pem -> /usr/share/ca-certificates/mozilla/OISTE_WISeKey_Global_Root_GB_CA.crt
+ssl/certs/OISTE_WISeKey_Global_Root_GC_CA.pem -> /usr/share/ca-certificates/mozilla/OISTE_WISeKey_Global_Root_GC_CA.crt
+ssl/certs/QuoVadis_Root_CA_1_G3.pem -> /usr/share/ca-certificates/mozilla/QuoVadis_Root_CA_1_G3.crt
+ssl/certs/QuoVadis_Root_CA_2.pem -> /usr/share/ca-certificates/mozilla/QuoVadis_Root_CA_2.crt
+ssl/certs/QuoVadis_Root_CA_2_G3.pem -> /usr/share/ca-certificates/mozilla/QuoVadis_Root_CA_2_G3.crt
+ssl/certs/QuoVadis_Root_CA_3.pem -> /usr/share/ca-certificates/mozilla/QuoVadis_Root_CA_3.crt
+ssl/certs/QuoVadis_Root_CA_3_G3.pem -> /usr/share/ca-certificates/mozilla/QuoVadis_Root_CA_3_G3.crt
+ssl/certs/SSL.com_EV_Root_Certification_Authority_ECC.pem -> /usr/share/ca-certificates/mozilla/SSL.com_EV_Root_Certification_Authority_ECC.crt
+ssl/certs/SSL.com_EV_Root_Certification_Authority_RSA_R2.pem -> /usr/share/ca-certificates/mozilla/SSL.com_EV_Root_Certification_Authority_RSA_R2.crt
+ssl/certs/SSL.com_Root_Certification_Authority_ECC.pem -> /usr/share/ca-certificates/mozilla/SSL.com_Root_Certification_Authority_ECC.crt
+ssl/certs/SSL.com_Root_Certification_Authority_RSA.pem -> /usr/share/ca-certificates/mozilla/SSL.com_Root_Certification_Authority_RSA.crt
+ssl/certs/SSL.com_TLS_ECC_Root_CA_2022.pem -> /usr/share/ca-certificates/mozilla/SSL.com_TLS_ECC_Root_CA_2022.crt
+ssl/certs/SSL.com_TLS_RSA_Root_CA_2022.pem -> /usr/share/ca-certificates/mozilla/SSL.com_TLS_RSA_Root_CA_2022.crt
+ssl/certs/SZAFIR_ROOT_CA2.pem -> /usr/share/ca-certificates/mozilla/SZAFIR_ROOT_CA2.crt
+ssl/certs/Sectigo_Public_Server_Authentication_Root_E46.pem -> /usr/share/ca-certificates/mozilla/Sectigo_Public_Server_Authentication_Root_E46.crt
+ssl/certs/Sectigo_Public_Server_Authentication_Root_R46.pem -> /usr/share/ca-certificates/mozilla/Sectigo_Public_Server_Authentication_Root_R46.crt
+ssl/certs/SecureSign_RootCA11.pem -> /usr/share/ca-certificates/mozilla/SecureSign_RootCA11.crt
+ssl/certs/SecureTrust_CA.pem -> /usr/share/ca-certificates/mozilla/SecureTrust_CA.crt
+ssl/certs/Secure_Global_CA.pem -> /usr/share/ca-certificates/mozilla/Secure_Global_CA.crt
+ssl/certs/Security_Communication_ECC_RootCA1.pem -> /usr/share/ca-certificates/mozilla/Security_Communication_ECC_RootCA1.crt
+ssl/certs/Security_Communication_RootCA2.pem -> /usr/share/ca-certificates/mozilla/Security_Communication_RootCA2.crt
+ssl/certs/Security_Communication_RootCA3.pem -> /usr/share/ca-certificates/mozilla/Security_Communication_RootCA3.crt
+ssl/certs/Security_Communication_Root_CA.pem -> /usr/share/ca-certificates/mozilla/Security_Communication_Root_CA.crt
+ssl/certs/Starfield_Class_2_CA.pem -> /usr/share/ca-certificates/mozilla/Starfield_Class_2_CA.crt
+ssl/certs/Starfield_Root_Certificate_Authority_-_G2.pem -> /usr/share/ca-certificates/mozilla/Starfield_Root_Certificate_Authority_-_G2.crt
+ssl/certs/Starfield_Services_Root_Certificate_Authority_-_G2.pem -> /usr/share/ca-certificates/mozilla/Starfield_Services_Root_Certificate_Authority_-_G2.crt
+ssl/certs/SwissSign_Gold_CA_-_G2.pem -> /usr/share/ca-certificates/mozilla/SwissSign_Gold_CA_-_G2.crt
+ssl/certs/SwissSign_Silver_CA_-_G2.pem -> /usr/share/ca-certificates/mozilla/SwissSign_Silver_CA_-_G2.crt
+ssl/certs/T-TeleSec_GlobalRoot_Class_2.pem -> /usr/share/ca-certificates/mozilla/T-TeleSec_GlobalRoot_Class_2.crt
+ssl/certs/T-TeleSec_GlobalRoot_Class_3.pem -> /usr/share/ca-certificates/mozilla/T-TeleSec_GlobalRoot_Class_3.crt
+ssl/certs/TUBITAK_Kamu_SM_SSL_Kok_Sertifikasi_-_Surum_1.pem -> /usr/share/ca-certificates/mozilla/TUBITAK_Kamu_SM_SSL_Kok_Sertifikasi_-_Surum_1.crt
+ssl/certs/TWCA_Global_Root_CA.pem -> /usr/share/ca-certificates/mozilla/TWCA_Global_Root_CA.crt
+ssl/certs/TWCA_Root_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/TWCA_Root_Certification_Authority.crt
+ssl/certs/TeliaSonera_Root_CA_v1.pem -> /usr/share/ca-certificates/mozilla/TeliaSonera_Root_CA_v1.crt
+ssl/certs/Telia_Root_CA_v2.pem -> /usr/share/ca-certificates/mozilla/Telia_Root_CA_v2.crt
+ssl/certs/TrustAsia_Global_Root_CA_G3.pem -> /usr/share/ca-certificates/mozilla/TrustAsia_Global_Root_CA_G3.crt
+ssl/certs/TrustAsia_Global_Root_CA_G4.pem -> /usr/share/ca-certificates/mozilla/TrustAsia_Global_Root_CA_G4.crt
+ssl/certs/Trustwave_Global_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/Trustwave_Global_Certification_Authority.crt
+ssl/certs/Trustwave_Global_ECC_P256_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/Trustwave_Global_ECC_P256_Certification_Authority.crt
+ssl/certs/Trustwave_Global_ECC_P384_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/Trustwave_Global_ECC_P384_Certification_Authority.crt
+ssl/certs/TunTrust_Root_CA.pem -> /usr/share/ca-certificates/mozilla/TunTrust_Root_CA.crt
+ssl/certs/UCA_Extended_Validation_Root.pem -> /usr/share/ca-certificates/mozilla/UCA_Extended_Validation_Root.crt
+ssl/certs/UCA_Global_G2_Root.pem -> /usr/share/ca-certificates/mozilla/UCA_Global_G2_Root.crt
+ssl/certs/USERTrust_ECC_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/USERTrust_ECC_Certification_Authority.crt
+ssl/certs/USERTrust_RSA_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/USERTrust_RSA_Certification_Authority.crt
+ssl/certs/XRamp_Global_CA_Root.pem -> /usr/share/ca-certificates/mozilla/XRamp_Global_CA_Root.crt
+ssl/certs/a3418fda.0 -> GTS_Root_R4.pem
+ssl/certs/a89d74c2.0 -> SSL.com_TLS_RSA_Root_CA_2022.pem
+ssl/certs/a94d09e5.0 -> ACCVRAIZ1.pem
+ssl/certs/aee5f10d.0 -> Entrust.net_Premium_2048_Secure_Server_CA.pem
+ssl/certs/b0e59380.0 -> GlobalSign_ECC_Root_CA_-_R4.pem
+ssl/certs/b1159c4c.0 -> DigiCert_Assured_ID_Root_CA.pem
+ssl/certs/b433981b.0 -> ANF_Secure_Server_Root_CA.pem
+ssl/certs/b66938e9.0 -> Secure_Global_CA.pem
+ssl/certs/b727005e.0 -> AffirmTrust_Premium.pem
+ssl/certs/b7a5b843.0 -> TWCA_Root_Certification_Authority.pem
+ssl/certs/b81b93f0.0 -> AC_RAIZ_FNMT-RCM_SERVIDORES_SEGUROS.pem
+ssl/certs/bf53fb88.0 -> Microsoft_RSA_Root_Certificate_Authority_2017.pem
+ssl/certs/c01eb047.0 -> UCA_Global_G2_Root.pem
+ssl/certs/c28a8a30.0 -> D-TRUST_Root_Class_3_CA_2_2009.pem
+ssl/certs/ca-certificates.crt
+ssl/certs/ca6e4ad9.0 -> ePKI_Root_Certification_Authority.pem
+ssl/certs/cbf06781.0 -> Go_Daddy_Root_Certificate_Authority_-_G2.pem
+ssl/certs/cc450945.0 -> Izenpe.com.pem
+ssl/certs/cd58d51e.0 -> Security_Communication_RootCA2.pem
+ssl/certs/cd8c0d63.0 -> AC_RAIZ_FNMT-RCM.pem
+ssl/certs/ce5e74ef.0 -> Amazon_Root_CA_1.pem
+ssl/certs/certSIGN_ROOT_CA.pem -> /usr/share/ca-certificates/mozilla/certSIGN_ROOT_CA.crt
+ssl/certs/certSIGN_Root_CA_G2.pem -> /usr/share/ca-certificates/mozilla/certSIGN_Root_CA_G2.crt
+ssl/certs/d4dae3dd.0 -> D-TRUST_Root_Class_3_CA_2_EV_2009.pem
+ssl/certs/d52c538d.0 -> DigiCert_TLS_RSA4096_Root_G5.pem
+ssl/certs/d6325660.0 -> COMODO_RSA_Certification_Authority.pem
+ssl/certs/d7e8dc79.0 -> QuoVadis_Root_CA_2.pem
+ssl/certs/d887a5bb.0 -> Trustwave_Global_ECC_P384_Certification_Authority.pem
+ssl/certs/da0cfd1d.0 -> Sectigo_Public_Server_Authentication_Root_E46.pem
+ssl/certs/dc4d6a89.0 -> GlobalSign_Root_CA_-_R6.pem
+ssl/certs/dd8e9d41.0 -> DigiCert_Global_Root_G3.pem
+ssl/certs/de6d66f3.0 -> Amazon_Root_CA_4.pem
+ssl/certs/e-Szigno_Root_CA_2017.pem -> /usr/share/ca-certificates/mozilla/e-Szigno_Root_CA_2017.crt
+ssl/certs/e113c810.0 -> Certigna.pem
+ssl/certs/e18bfb83.0 -> QuoVadis_Root_CA_3_G3.pem
+ssl/certs/e35234b1.0 -> Certum_Trusted_Root_CA.pem
+ssl/certs/e36a6752.0 -> Atos_TrustedRoot_2011.pem
+ssl/certs/e73d606e.0 -> OISTE_WISeKey_Global_Root_GB_CA.pem
+ssl/certs/e868b802.0 -> e-Szigno_Root_CA_2017.pem
+ssl/certs/e8de2f56.0 -> Buypass_Class_3_Root_CA.pem
+ssl/certs/ePKI_Root_Certification_Authority.pem -> /usr/share/ca-certificates/mozilla/ePKI_Root_Certification_Authority.crt
+ssl/certs/ecccd8db.0 -> HARICA_TLS_ECC_Root_CA_2021.pem
+ssl/certs/ed858448.0 -> vTrus_ECC_Root_CA.pem
+ssl/certs/ee64a828.0 -> Comodo_AAA_Services_root.pem
+ssl/certs/eed8c118.0 -> COMODO_ECC_Certification_Authority.pem
+ssl/certs/ef954a4e.0 -> IdenTrust_Commercial_Root_CA_1.pem
+ssl/certs/emSign_ECC_Root_CA_-_C3.pem -> /usr/share/ca-certificates/mozilla/emSign_ECC_Root_CA_-_C3.crt
+ssl/certs/emSign_ECC_Root_CA_-_G3.pem -> /usr/share/ca-certificates/mozilla/emSign_ECC_Root_CA_-_G3.crt
+ssl/certs/emSign_Root_CA_-_C1.pem -> /usr/share/ca-certificates/mozilla/emSign_Root_CA_-_C1.crt
+ssl/certs/emSign_Root_CA_-_G1.pem -> /usr/share/ca-certificates/mozilla/emSign_Root_CA_-_G1.crt
+ssl/certs/f081611a.0 -> Go_Daddy_Class_2_CA.pem
+ssl/certs/f0c70a8d.0 -> SSL.com_EV_Root_Certification_Authority_ECC.pem
+ssl/certs/f249de83.0 -> Trustwave_Global_Certification_Authority.pem
+ssl/certs/f30dd6ad.0 -> USERTrust_ECC_Certification_Authority.pem
+ssl/certs/f3377b1b.0 -> Security_Communication_Root_CA.pem
+ssl/certs/f387163d.0 -> Starfield_Class_2_CA.pem
+ssl/certs/f39fc864.0 -> SecureTrust_CA.pem
+ssl/certs/f51bb24c.0 -> Certigna_Root_CA.pem
+ssl/certs/fa5da96b.0 -> GLOBALTRUST_2020.pem
+ssl/certs/fb717492.0 -> Atos_TrustedRoot_Root_CA_ECC_TLS_2021.pem
+ssl/certs/fc5a8f99.0 -> USERTrust_RSA_Certification_Authority.pem
+ssl/certs/fd64f3fc.0 -> TunTrust_Root_CA.pem
+ssl/certs/fe8a2cd8.0 -> SZAFIR_ROOT_CA2.pem
+ssl/certs/feffd413.0 -> GlobalSign_Root_E46.pem
+ssl/certs/ff34af3f.0 -> TUBITAK_Kamu_SM_SSL_Kok_Sertifikasi_-_Surum_1.pem
+ssl/certs/vTrus_ECC_Root_CA.pem -> /usr/share/ca-certificates/mozilla/vTrus_ECC_Root_CA.crt
+ssl/certs/vTrus_Root_CA.pem -> /usr/share/ca-certificates/mozilla/vTrus_Root_CA.crt
+ssl/private/
+sudoers.d/
+sudoers.d/README
+supercat/
+supercat/spcrc-crontab
+supercat/spcrc-crontab-light
+sysctl.d/
+sysctl.d/10-bufferbloat.conf
+sysctl.d/10-console-messages.conf
+sysctl.d/10-ipv6-privacy.conf
+sysctl.d/10-kernel-hardening.conf
+sysctl.d/10-magic-sysrq.conf
+sysctl.d/10-map-count.conf
+sysctl.d/10-network-security.conf
+sysctl.d/10-ptrace.conf
+sysctl.d/10-zeropage.conf
+sysctl.d/99-sysctl.conf -> ../sysctl.conf
+sysctl.d/README.sysctl
+sysstat/
+sysstat/sysstat
+sysstat/sysstat.ioconf
+systemd/
+systemd/journald.conf
+systemd/logind.conf
+systemd/networkd.conf
+systemd/pstore.conf
+systemd/resolved.conf
+systemd/sleep.conf
+systemd/system.conf
+systemd/timesyncd.conf
+systemd/user.conf
+systemd/network/
+systemd/system-generators/
+systemd/system-generators/systemd-gpt-auto-generator -> /dev/null
+systemd/system/
+systemd/system/dbus-org.freedesktop.ModemManager1.service -> /usr/lib/systemd/system/ModemManager.service
+systemd/system/dbus-org.freedesktop.resolve1.service -> /usr/lib/systemd/system/systemd-resolved.service
+systemd/system/dbus-org.freedesktop.thermald.service -> /usr/lib/systemd/system/thermald.service
+systemd/system/dbus-org.freedesktop.timesync1.service -> /usr/lib/systemd/system/systemd-timesyncd.service
+systemd/system/iscsi.service -> /usr/lib/systemd/system/open-iscsi.service
+systemd/system/syslog.service -> /usr/lib/systemd/system/rsyslog.service
+systemd/system/vmtoolsd.service -> /usr/lib/systemd/system/open-vm-tools.service
+systemd/system/cloud-config.target.wants/
+systemd/system/cloud-config.target.wants/cloud-init-hotplugd.socket -> /usr/lib/systemd/system/cloud-init-hotplugd.socket
+systemd/system/cloud-final.service.wants/
+systemd/system/cloud-final.service.wants/snapd.seeded.service -> /usr/lib/systemd/system/snapd.seeded.service
+systemd/system/cloud-init.target.wants/
+systemd/system/cloud-init.target.wants/cloud-config.service -> /usr/lib/systemd/system/cloud-config.service
+systemd/system/cloud-init.target.wants/cloud-final.service -> /usr/lib/systemd/system/cloud-final.service
+systemd/system/cloud-init.target.wants/cloud-init-local.service -> /usr/lib/systemd/system/cloud-init-local.service
+systemd/system/cloud-init.target.wants/cloud-init.service -> /usr/lib/systemd/system/cloud-init.service
+systemd/system/display-manager.service.wants/
+systemd/system/display-manager.service.wants/gpu-manager.service -> /usr/lib/systemd/system/gpu-manager.service
+systemd/system/emergency.target.wants/
+systemd/system/emergency.target.wants/grub-initrd-fallback.service -> /usr/lib/systemd/system/grub-initrd-fallback.service
+systemd/system/final.target.wants/
+systemd/system/final.target.wants/snapd.system-shutdown.service -> /usr/lib/systemd/system/snapd.system-shutdown.service
+systemd/system/getty.target.wants/
+systemd/system/getty.target.wants/getty@tty1.service -> /usr/lib/systemd/system/getty@.service
+systemd/system/graphical.target.wants/
+systemd/system/graphical.target.wants/udisks2.service -> /usr/lib/systemd/system/udisks2.service
+systemd/system/hibernate.target.wants/
+systemd/system/hibernate.target.wants/grub-common.service -> /usr/lib/systemd/system/grub-common.service
+systemd/system/hybrid-sleep.target.wants/
+systemd/system/hybrid-sleep.target.wants/grub-common.service -> /usr/lib/systemd/system/grub-common.service
+systemd/system/mdmonitor.service.wants/
+systemd/system/mdmonitor.service.wants/mdcheck_continue.timer -> /usr/lib/systemd/system/mdcheck_continue.timer
+systemd/system/mdmonitor.service.wants/mdcheck_start.timer -> /usr/lib/systemd/system/mdcheck_start.timer
+systemd/system/mdmonitor.service.wants/mdmonitor-oneshot.timer -> /usr/lib/systemd/system/mdmonitor-oneshot.timer
+systemd/system/multi-user.target.wants/
+systemd/system/multi-user.target.wants/ModemManager.service -> /usr/lib/systemd/system/ModemManager.service
+systemd/system/multi-user.target.wants/apport.service -> /usr/lib/systemd/system/apport.service
+systemd/system/multi-user.target.wants/console-setup.service -> /usr/lib/systemd/system/console-setup.service
+systemd/system/multi-user.target.wants/cron.service -> /usr/lib/systemd/system/cron.service
+systemd/system/multi-user.target.wants/dmesg.service -> /usr/lib/systemd/system/dmesg.service
+systemd/system/multi-user.target.wants/e2scrub_reap.service -> /lib/systemd/system/e2scrub_reap.service
+systemd/system/multi-user.target.wants/grub-common.service -> /usr/lib/systemd/system/grub-common.service
+systemd/system/multi-user.target.wants/grub-initrd-fallback.service -> /usr/lib/systemd/system/grub-initrd-fallback.service
+systemd/system/multi-user.target.wants/lxd-installer.socket -> /usr/lib/systemd/system/lxd-installer.socket
+systemd/system/multi-user.target.wants/networkd-dispatcher.service -> /usr/lib/systemd/system/networkd-dispatcher.service
+systemd/system/multi-user.target.wants/open-vm-tools.service -> /usr/lib/systemd/system/open-vm-tools.service
+systemd/system/multi-user.target.wants/pollinate.service -> /usr/lib/systemd/system/pollinate.service
+systemd/system/multi-user.target.wants/remote-fs.target -> /usr/lib/systemd/system/remote-fs.target
+systemd/system/multi-user.target.wants/rsyslog.service -> /usr/lib/systemd/system/rsyslog.service
+systemd/system/multi-user.target.wants/secureboot-db.service -> /usr/lib/systemd/system/secureboot-db.service
+systemd/system/multi-user.target.wants/snapd.apparmor.service -> /usr/lib/systemd/system/snapd.apparmor.service
+systemd/system/multi-user.target.wants/snapd.autoimport.service -> /usr/lib/systemd/system/snapd.autoimport.service
+systemd/system/multi-user.target.wants/snapd.core-fixup.service -> /usr/lib/systemd/system/snapd.core-fixup.service
+systemd/system/multi-user.target.wants/snapd.recovery-chooser-trigger.service -> /usr/lib/systemd/system/snapd.recovery-chooser-trigger.service
+systemd/system/multi-user.target.wants/snapd.seeded.service -> /usr/lib/systemd/system/snapd.seeded.service
+systemd/system/multi-user.target.wants/snapd.service -> /usr/lib/systemd/system/snapd.service
+systemd/system/multi-user.target.wants/sysstat.service -> /usr/lib/systemd/system/sysstat.service
+systemd/system/multi-user.target.wants/systemd-networkd.service -> /lib/systemd/system/systemd-networkd.service
+systemd/system/multi-user.target.wants/thermald.service -> /usr/lib/systemd/system/thermald.service
+systemd/system/multi-user.target.wants/ua-reboot-cmds.service -> /usr/lib/systemd/system/ua-reboot-cmds.service
+systemd/system/multi-user.target.wants/ubuntu-advantage.service -> /usr/lib/systemd/system/ubuntu-advantage.service
+systemd/system/multi-user.target.wants/ufw.service -> /usr/lib/systemd/system/ufw.service
+systemd/system/multi-user.target.wants/unattended-upgrades.service -> /usr/lib/systemd/system/unattended-upgrades.service
+systemd/system/network-online.target.wants/
+systemd/system/network-online.target.wants/systemd-networkd-wait-online.service -> /lib/systemd/system/systemd-networkd-wait-online.service
+systemd/system/oem-config.service.wants/
+systemd/system/oem-config.service.wants/gpu-manager.service -> /usr/lib/systemd/system/gpu-manager.service
+systemd/system/open-vm-tools.service.requires/
+systemd/system/open-vm-tools.service.requires/vgauth.service -> /usr/lib/systemd/system/vgauth.service
+systemd/system/paths.target.wants/
+systemd/system/paths.target.wants/apport-autoreport.path -> /usr/lib/systemd/system/apport-autoreport.path
+systemd/system/paths.target.wants/tpm-udev.path -> /usr/lib/systemd/system/tpm-udev.path
+systemd/system/rescue.target.wants/
+systemd/system/rescue.target.wants/grub-initrd-fallback.service -> /usr/lib/systemd/system/grub-initrd-fallback.service
+systemd/system/sleep.target.wants/
+systemd/system/sleep.target.wants/grub-initrd-fallback.service -> /usr/lib/systemd/system/grub-initrd-fallback.service
+systemd/system/sockets.target.wants/
+systemd/system/sockets.target.wants/apport-forward.socket -> /usr/lib/systemd/system/apport-forward.socket
+systemd/system/sockets.target.wants/dm-event.socket -> /usr/lib/systemd/system/dm-event.socket
+systemd/system/sockets.target.wants/iscsid.socket -> /usr/lib/systemd/system/iscsid.socket
+systemd/system/sockets.target.wants/multipathd.socket -> /usr/lib/systemd/system/multipathd.socket
+systemd/system/sockets.target.wants/snapd.socket -> /usr/lib/systemd/system/snapd.socket
+systemd/system/sockets.target.wants/ssh.socket -> /usr/lib/systemd/system/ssh.socket
+systemd/system/sockets.target.wants/systemd-networkd.socket -> /lib/systemd/system/systemd-networkd.socket
+systemd/system/sockets.target.wants/uuidd.socket -> /usr/lib/systemd/system/uuidd.socket
+systemd/system/ssh.service.requires/
+systemd/system/ssh.service.requires/ssh.socket -> /usr/lib/systemd/system/ssh.socket
+systemd/system/suspend-then-hibernate.target.wants/
+systemd/system/suspend-then-hibernate.target.wants/grub-common.service -> /usr/lib/systemd/system/grub-common.service
+systemd/system/suspend.target.wants/
+systemd/system/suspend.target.wants/grub-common.service -> /usr/lib/systemd/system/grub-common.service
+systemd/system/sysinit.target.wants/
+systemd/system/sysinit.target.wants/apparmor.service -> /usr/lib/systemd/system/apparmor.service
+systemd/system/sysinit.target.wants/blk-availability.service -> /usr/lib/systemd/system/blk-availability.service
+systemd/system/sysinit.target.wants/finalrd.service -> /usr/lib/systemd/system/finalrd.service
+systemd/system/sysinit.target.wants/keyboard-setup.service -> /usr/lib/systemd/system/keyboard-setup.service
+systemd/system/sysinit.target.wants/lvm2-lvmpolld.socket -> /usr/lib/systemd/system/lvm2-lvmpolld.socket
+systemd/system/sysinit.target.wants/lvm2-monitor.service -> /usr/lib/systemd/system/lvm2-monitor.service
+systemd/system/sysinit.target.wants/multipathd.service -> /usr/lib/systemd/system/multipathd.service
+systemd/system/sysinit.target.wants/open-iscsi.service -> /usr/lib/systemd/system/open-iscsi.service
+systemd/system/sysinit.target.wants/setvtrgb.service -> /usr/lib/systemd/system/setvtrgb.service
+systemd/system/sysinit.target.wants/systemd-pstore.service -> /usr/lib/systemd/system/systemd-pstore.service
+systemd/system/sysinit.target.wants/systemd-resolved.service -> /usr/lib/systemd/system/systemd-resolved.service
+systemd/system/sysinit.target.wants/systemd-timesyncd.service -> /usr/lib/systemd/system/systemd-timesyncd.service
+systemd/system/sysstat.service.wants/
+systemd/system/sysstat.service.wants/sysstat-collect.timer -> /usr/lib/systemd/system/sysstat-collect.timer
+systemd/system/sysstat.service.wants/sysstat-summary.timer -> /usr/lib/systemd/system/sysstat-summary.timer
+systemd/system/timers.target.wants/
+systemd/system/timers.target.wants/apport-autoreport.timer -> /usr/lib/systemd/system/apport-autoreport.timer
+systemd/system/timers.target.wants/apt-daily-upgrade.timer -> /lib/systemd/system/apt-daily-upgrade.timer
+systemd/system/timers.target.wants/apt-daily.timer -> /lib/systemd/system/apt-daily.timer
+systemd/system/timers.target.wants/dpkg-db-backup.timer -> /lib/systemd/system/dpkg-db-backup.timer
+systemd/system/timers.target.wants/e2scrub_all.timer -> /lib/systemd/system/e2scrub_all.timer
+systemd/system/timers.target.wants/fstrim.timer -> /lib/systemd/system/fstrim.timer
+systemd/system/timers.target.wants/fwupd-refresh.timer -> /usr/lib/systemd/system/fwupd-refresh.timer
+systemd/system/timers.target.wants/logrotate.timer -> /usr/lib/systemd/system/logrotate.timer
+systemd/system/timers.target.wants/man-db.timer -> /usr/lib/systemd/system/man-db.timer
+systemd/system/timers.target.wants/motd-news.timer -> /lib/systemd/system/motd-news.timer
+systemd/system/timers.target.wants/snapd.snap-repair.timer -> /usr/lib/systemd/system/snapd.snap-repair.timer
+systemd/system/timers.target.wants/ua-timer.timer -> /usr/lib/systemd/system/ua-timer.timer
+systemd/system/timers.target.wants/update-notifier-download.timer -> /usr/lib/systemd/system/update-notifier-download.timer
+systemd/system/timers.target.wants/update-notifier-motd.timer -> /usr/lib/systemd/system/update-notifier-motd.timer
+systemd/user/
+systemd/user/sockets.target.wants/
+systemd/user/sockets.target.wants/dirmngr.socket -> /usr/lib/systemd/user/dirmngr.socket
+systemd/user/sockets.target.wants/gpg-agent-browser.socket -> /usr/lib/systemd/user/gpg-agent-browser.socket
+systemd/user/sockets.target.wants/gpg-agent-extra.socket -> /usr/lib/systemd/user/gpg-agent-extra.socket
+systemd/user/sockets.target.wants/gpg-agent-ssh.socket -> /usr/lib/systemd/user/gpg-agent-ssh.socket
+systemd/user/sockets.target.wants/gpg-agent.socket -> /usr/lib/systemd/user/gpg-agent.socket
+systemd/user/sockets.target.wants/keyboxd.socket -> /usr/lib/systemd/user/keyboxd.socket
+systemd/user/sockets.target.wants/pk-debconf-helper.socket -> /usr/lib/systemd/user/pk-debconf-helper.socket
+systemd/user/timers.target.wants/
+systemd/user/timers.target.wants/launchpadlib-cache-clean.timer -> /usr/lib/systemd/user/launchpadlib-cache-clean.timer
+terminfo/
+terminfo/README
+thermald/
+thermald/thermal-cpu-cdev-order.xml
+tmpfiles.d/
+tmpfiles.d/screen-cleanup.conf
+ubuntu-advantage/
+ubuntu-advantage/uaclient.conf
+udev/
+udev/iocost.conf
+udev/udev.conf
+udev/hwdb.d/
+udev/rules.d/
+udev/rules.d/ubuntu--vg-ubuntu--lv.rules
+udisks2/
+udisks2/mount_options.conf.example
+udisks2/udisks2.conf
+ufw/
+ufw/after.init
+ufw/after.rules
+ufw/after6.rules
+ufw/before.init
+ufw/before.rules
+ufw/before6.rules
+ufw/sysctl.conf
+ufw/ufw.conf
+ufw/user.rules
+ufw/user6.rules
+ufw/applications.d/
+ufw/applications.d/openssh-server
+update-manager/
+update-manager/meta-release
+update-manager/release-upgrades
+update-manager/release-upgrades.d/
+update-manager/release-upgrades.d/ubuntu-advantage-upgrades.cfg
+update-motd.d/
+update-motd.d/00-header
+update-motd.d/10-help-text
+update-motd.d/50-landscape-sysinfo -> /usr/share/landscape/landscape-sysinfo.wrapper
+update-motd.d/50-motd-news
+update-motd.d/85-fwupd
+update-motd.d/90-updates-available
+update-motd.d/91-contract-ua-esm-status
+update-motd.d/91-release-upgrade
+update-motd.d/92-unattended-upgrades
+update-motd.d/95-hwe-eol
+update-motd.d/97-overlayroot
+update-motd.d/98-fsck-at-reboot
+update-motd.d/98-reboot-required
+update-notifier/
+usb_modeswitch.d/
+vim/
+vim/vimrc
+vim/vimrc.tiny
+vmware-tools/
+vmware-tools/poweroff-vm-default
+vmware-tools/poweron-vm-default
+vmware-tools/resume-vm-default
+vmware-tools/statechange.subr
+vmware-tools/suspend-vm-default
+vmware-tools/tools.conf
+vmware-tools/tools.conf.example
+vmware-tools/vgauth.conf
+vmware-tools/scripts/
+vmware-tools/scripts/vmware/
+vmware-tools/scripts/vmware/network
+vmware-tools/vgauth/
+vmware-tools/vgauth/schemas/
+vmware-tools/vgauth/schemas/XMLSchema-hasFacetAndProperty.xsd
+vmware-tools/vgauth/schemas/XMLSchema-instance.xsd
+vmware-tools/vgauth/schemas/XMLSchema.dtd
+vmware-tools/vgauth/schemas/XMLSchema.xsd
+vmware-tools/vgauth/schemas/catalog.xml
+vmware-tools/vgauth/schemas/datatypes.dtd
+vmware-tools/vgauth/schemas/saml-schema-assertion-2.0.xsd
+vmware-tools/vgauth/schemas/xenc-schema.xsd
+vmware-tools/vgauth/schemas/xml.xsd
+vmware-tools/vgauth/schemas/xmldsig-core-schema.xsd
+xdg/
+xdg/user-dirs.conf
+xdg/user-dirs.defaults
+xdg/autostart/
+xdg/autostart/snap-userd-autostart.desktop
+xdg/autostart/xdg-user-dirs.desktop
+xdg/systemd/
+xdg/systemd/user -> ../../systemd/user
+xml/
+xml/catalog
+xml/catalog.old
+xml/polkitd.xml
+xml/polkitd.xml.old
+xml/xml-core.xml
+xml/xml-core.xml.old
+
+sent 2,446,113 bytes  received 19,372 bytes  1,643,656.67 bytes/sec
+total size is 2,362,002  speedup is 0.96
+
+root@eltex-practice2-pg1-v19:~# tar -czf etc_backup.gz etc_backup
+root@eltex-practice2-pg1-v19:~# tar -cjf etc_backup.bz2 etc_backup
+root@eltex-practice2-pg1-v19:~# sudo tar -cf - -C /root etc_backup | 7za a -si /root/etc_backup.7z
+
+7-Zip (a) 23.01 (x64) : Copyright (c) 1999-2023 Igor Pavlov : 2023-06-20
+ 64-bit locale=en_US.UTF-8 Threads:2 OPEN_MAX:1024
+
+Creating archive: /root/etc_backup.7z
+
+Add new data to archive: 1 file
+
+
+Files read from disk: 1
+Archive size: 485876 bytes (475 KiB)
+Everything is Ok
+
+root@eltex-practice2-pg1-v19:~# ls -lh /root/etc_backup.*
+-rw-r--r-- 1 root root 475K Oct 17 05:54 /root/etc_backup.7z
+-rw-r--r-- 1 root root 547K Oct 17 05:48 /root/etc_backup.bz2
+-rw-r--r-- 1 root root 581K Oct 17 05:48 /root/etc_backup.gz
+
+root@eltex-practice2-pg1-v19:~# sh -c 'date > /etc/motd'
+root@eltex-practice2-pg1-v19:~# rsync -av /etc/ /root/etc_backup/
+sending incremental file list
+./
+ld.so.cache
+locale.gen
+motd
+timezone
+X11/Xsession.d/
+alternatives/
+apport/
+apport/report-ignore/
+bash_completion.d/
+cloud/
+cloud/cloud.cfg.d/
+cloud/cloud.cfg.d/90_dpkg.cfg
+cloud/templates/
+cloud/templates/sources.list.debian.deb822.tmpl
+cloud/templates/sources.list.ubuntu.deb822.tmpl
+cron.daily/
+default/
+dhcp/dhclient-exit-hooks.d/
+dpkg/
+gnutls/
+init.d/
+kernel/preinst.d/
+ld.so.conf.d/
+libblockdev/3/conf.d/
+logcheck/ignore.d.server/
+logrotate.d/
+modprobe.d/
+modules-load.d/
+pam.d/
+pam.d/common-account
+pam.d/common-auth
+pam.d/common-password
+pam.d/common-session
+pam.d/common-session-noninteractive
+perl/Net/
+profile.d/
+python3.12/
+qemu/
+rsyslog.d/
+security/
+security/namespace.init
+ssh/
+ssh/sshd_config.ucf-dist
+ssl/
+sudoers.d/
+sysctl.d/
+systemd/
+systemd/system-generators/
+udev/
+udisks2/
+ufw/applications.d/
+vim/
+vmware-tools/
+vmware-tools/tools.conf.example
+vmware-tools/scripts/vmware/
+vmware-tools/vgauth/schemas/
+
+sent 139,634 bytes  received 700 bytes  280,668.00 bytes/sec
+total size is 2,366,450  speedup is 16.86
+root@eltex-practice2-pg1-v19:~# tar -czf /root/etc_backup_updated.tar.gz -C /root etc_backup/motd
+
+root@eltex-practice2-pg1-v19:~# mkdir etc_backup_bzip
+root@eltex-practice2-pg1-v19:~# tar -xjf etc_backup.bz2 -C etc_backup_bzip
+root@eltex-practice2-pg1-v19:~# diff etc_backup etc_backup_bzip/etc_backup/
+Common subdirectories: etc_backup/alternatives and etc_backup_bzip/etc_backup/alternatives
+Common subdirectories: etc_backup/apparmor and etc_backup_bzip/etc_backup/apparmor
+Common subdirectories: etc_backup/apparmor.d and etc_backup_bzip/etc_backup/apparmor.d
+Common subdirectories: etc_backup/apport and etc_backup_bzip/etc_backup/apport
+Common subdirectories: etc_backup/apt and etc_backup_bzip/etc_backup/apt
+Common subdirectories: etc_backup/bash_completion.d and etc_backup_bzip/etc_backup/bash_completion.d
+Common subdirectories: etc_backup/binfmt.d and etc_backup_bzip/etc_backup/binfmt.d
+Common subdirectories: etc_backup/byobu and etc_backup_bzip/etc_backup/byobu
+Common subdirectories: etc_backup/ca-certificates and etc_backup_bzip/etc_backup/ca-certificates
+Common subdirectories: etc_backup/cloud and etc_backup_bzip/etc_backup/cloud
+Common subdirectories: etc_backup/console-setup and etc_backup_bzip/etc_backup/console-setup
+Common subdirectories: etc_backup/credstore and etc_backup_bzip/etc_backup/credstore
+Common subdirectories: etc_backup/credstore.encrypted and etc_backup_bzip/etc_backup/credstore.encrypted
+Common subdirectories: etc_backup/cron.d and etc_backup_bzip/etc_backup/cron.d
+Common subdirectories: etc_backup/cron.daily and etc_backup_bzip/etc_backup/cron.daily
+Common subdirectories: etc_backup/cron.hourly and etc_backup_bzip/etc_backup/cron.hourly
+Common subdirectories: etc_backup/cron.monthly and etc_backup_bzip/etc_backup/cron.monthly
+Common subdirectories: etc_backup/cron.weekly and etc_backup_bzip/etc_backup/cron.weekly
+Common subdirectories: etc_backup/cron.yearly and etc_backup_bzip/etc_backup/cron.yearly
+Common subdirectories: etc_backup/cryptsetup-initramfs and etc_backup_bzip/etc_backup/cryptsetup-initramfs
+Common subdirectories: etc_backup/dbus-1 and etc_backup_bzip/etc_backup/dbus-1
+Common subdirectories: etc_backup/default and etc_backup_bzip/etc_backup/default
+Common subdirectories: etc_backup/depmod.d and etc_backup_bzip/etc_backup/depmod.d
+Common subdirectories: etc_backup/dhcp and etc_backup_bzip/etc_backup/dhcp
+Common subdirectories: etc_backup/dpkg and etc_backup_bzip/etc_backup/dpkg
+Common subdirectories: etc_backup/fonts and etc_backup_bzip/etc_backup/fonts
+Common subdirectories: etc_backup/fwupd and etc_backup_bzip/etc_backup/fwupd
+Common subdirectories: etc_backup/gnutls and etc_backup_bzip/etc_backup/gnutls
+Common subdirectories: etc_backup/groff and etc_backup_bzip/etc_backup/groff
+Common subdirectories: etc_backup/grub.d and etc_backup_bzip/etc_backup/grub.d
+Common subdirectories: etc_backup/gss and etc_backup_bzip/etc_backup/gss
+Common subdirectories: etc_backup/init.d and etc_backup_bzip/etc_backup/init.d
+Common subdirectories: etc_backup/initramfs-tools and etc_backup_bzip/etc_backup/initramfs-tools
+Common subdirectories: etc_backup/iproute2 and etc_backup_bzip/etc_backup/iproute2
+Common subdirectories: etc_backup/iscsi and etc_backup_bzip/etc_backup/iscsi
+Common subdirectories: etc_backup/kernel and etc_backup_bzip/etc_backup/kernel
+Common subdirectories: etc_backup/landscape and etc_backup_bzip/etc_backup/landscape
+Common subdirectories: etc_backup/ldap and etc_backup_bzip/etc_backup/ldap
+Binary files etc_backup/ld.so.cache and etc_backup_bzip/etc_backup/ld.so.cache differ
+Common subdirectories: etc_backup/ld.so.conf.d and etc_backup_bzip/etc_backup/ld.so.conf.d
+Common subdirectories: etc_backup/libblockdev and etc_backup_bzip/etc_backup/libblockdev
+Common subdirectories: etc_backup/libibverbs.d and etc_backup_bzip/etc_backup/libibverbs.d
+Common subdirectories: etc_backup/libnl-3 and etc_backup_bzip/etc_backup/libnl-3
+Common subdirectories: etc_backup/logcheck and etc_backup_bzip/etc_backup/logcheck
+Common subdirectories: etc_backup/logrotate.d and etc_backup_bzip/etc_backup/logrotate.d
+Common subdirectories: etc_backup/lvm and etc_backup_bzip/etc_backup/lvm
+Common subdirectories: etc_backup/mdadm and etc_backup_bzip/etc_backup/mdadm
+Common subdirectories: etc_backup/ModemManager and etc_backup_bzip/etc_backup/ModemManager
+Common subdirectories: etc_backup/modprobe.d and etc_backup_bzip/etc_backup/modprobe.d
+Common subdirectories: etc_backup/modules-load.d and etc_backup_bzip/etc_backup/modules-load.d
+diff etc_backup/motd etc_backup_bzip/etc_backup/motd
+1c1
+< Fri Oct 17 06:05:47 AM UTC 2025
+---
+> Кузлякин Дмитрий
+diff: etc_backup/mtab: No such file or directory
+diff: etc_backup_bzip/etc_backup/mtab: No such file or directory
+Common subdirectories: etc_backup/multipath and etc_backup_bzip/etc_backup/multipath
+Common subdirectories: etc_backup/needrestart and etc_backup_bzip/etc_backup/needrestart
+Common subdirectories: etc_backup/netplan and etc_backup_bzip/etc_backup/netplan
+Common subdirectories: etc_backup/network and etc_backup_bzip/etc_backup/network
+Common subdirectories: etc_backup/networkd-dispatcher and etc_backup_bzip/etc_backup/networkd-dispatcher
+Common subdirectories: etc_backup/newt and etc_backup_bzip/etc_backup/newt
+Common subdirectories: etc_backup/opt and etc_backup_bzip/etc_backup/opt
+diff: etc_backup/os-release: No such file or directory
+diff: etc_backup_bzip/etc_backup/os-release: No such file or directory
+Common subdirectories: etc_backup/PackageKit and etc_backup_bzip/etc_backup/PackageKit
+Common subdirectories: etc_backup/pam.d and etc_backup_bzip/etc_backup/pam.d
+Common subdirectories: etc_backup/perl and etc_backup_bzip/etc_backup/perl
+Common subdirectories: etc_backup/pki and etc_backup_bzip/etc_backup/pki
+Common subdirectories: etc_backup/plymouth and etc_backup_bzip/etc_backup/plymouth
+Common subdirectories: etc_backup/pm and etc_backup_bzip/etc_backup/pm
+Common subdirectories: etc_backup/polkit-1 and etc_backup_bzip/etc_backup/polkit-1
+Common subdirectories: etc_backup/pollinate and etc_backup_bzip/etc_backup/pollinate
+Common subdirectories: etc_backup/profile.d and etc_backup_bzip/etc_backup/profile.d
+Common subdirectories: etc_backup/python3 and etc_backup_bzip/etc_backup/python3
+Common subdirectories: etc_backup/python3.12 and etc_backup_bzip/etc_backup/python3.12
+Common subdirectories: etc_backup/qemu and etc_backup_bzip/etc_backup/qemu
+Common subdirectories: etc_backup/rc0.d and etc_backup_bzip/etc_backup/rc0.d
+Common subdirectories: etc_backup/rc1.d and etc_backup_bzip/etc_backup/rc1.d
+Common subdirectories: etc_backup/rc2.d and etc_backup_bzip/etc_backup/rc2.d
+Common subdirectories: etc_backup/rc3.d and etc_backup_bzip/etc_backup/rc3.d
+Common subdirectories: etc_backup/rc4.d and etc_backup_bzip/etc_backup/rc4.d
+Common subdirectories: etc_backup/rc5.d and etc_backup_bzip/etc_backup/rc5.d
+Common subdirectories: etc_backup/rc6.d and etc_backup_bzip/etc_backup/rc6.d
+Common subdirectories: etc_backup/rcS.d and etc_backup_bzip/etc_backup/rcS.d
+diff: etc_backup/resolv.conf: No such file or directory
+diff: etc_backup_bzip/etc_backup/resolv.conf: No such file or directory
+Common subdirectories: etc_backup/rsyslog.d and etc_backup_bzip/etc_backup/rsyslog.d
+Common subdirectories: etc_backup/security and etc_backup_bzip/etc_backup/security
+Common subdirectories: etc_backup/selinux and etc_backup_bzip/etc_backup/selinux
+Common subdirectories: etc_backup/sensors.d and etc_backup_bzip/etc_backup/sensors.d
+Common subdirectories: etc_backup/sgml and etc_backup_bzip/etc_backup/sgml
+Common subdirectories: etc_backup/skel and etc_backup_bzip/etc_backup/skel
+Common subdirectories: etc_backup/sos and etc_backup_bzip/etc_backup/sos
+Common subdirectories: etc_backup/ssh and etc_backup_bzip/etc_backup/ssh
+Common subdirectories: etc_backup/ssl and etc_backup_bzip/etc_backup/ssl
+Common subdirectories: etc_backup/sudoers.d and etc_backup_bzip/etc_backup/sudoers.d
+Common subdirectories: etc_backup/supercat and etc_backup_bzip/etc_backup/supercat
+Common subdirectories: etc_backup/sysctl.d and etc_backup_bzip/etc_backup/sysctl.d
+Common subdirectories: etc_backup/sysstat and etc_backup_bzip/etc_backup/sysstat
+Common subdirectories: etc_backup/systemd and etc_backup_bzip/etc_backup/systemd
+Common subdirectories: etc_backup/terminfo and etc_backup_bzip/etc_backup/terminfo
+Common subdirectories: etc_backup/thermald and etc_backup_bzip/etc_backup/thermald
+Common subdirectories: etc_backup/tmpfiles.d and etc_backup_bzip/etc_backup/tmpfiles.d
+Common subdirectories: etc_backup/ubuntu-advantage and etc_backup_bzip/etc_backup/ubuntu-advantage
+Common subdirectories: etc_backup/udev and etc_backup_bzip/etc_backup/udev
+Common subdirectories: etc_backup/udisks2 and etc_backup_bzip/etc_backup/udisks2
+Common subdirectories: etc_backup/ufw and etc_backup_bzip/etc_backup/ufw
+Common subdirectories: etc_backup/update-manager and etc_backup_bzip/etc_backup/update-manager
+Common subdirectories: etc_backup/update-motd.d and etc_backup_bzip/etc_backup/update-motd.d
+Common subdirectories: etc_backup/update-notifier and etc_backup_bzip/etc_backup/update-notifier
+Common subdirectories: etc_backup/UPower and etc_backup_bzip/etc_backup/UPower
+Common subdirectories: etc_backup/usb_modeswitch.d and etc_backup_bzip/etc_backup/usb_modeswitch.d
+Common subdirectories: etc_backup/vim and etc_backup_bzip/etc_backup/vim
+Common subdirectories: etc_backup/vmware-tools and etc_backup_bzip/etc_backup/vmware-tools
+Common subdirectories: etc_backup/X11 and etc_backup_bzip/etc_backup/X11
+Common subdirectories: etc_backup/xdg and etc_backup_bzip/etc_backup/xdg
+Common subdirectories: etc_backup/xml and etc_backup_bzip/etc_backup/xml
+
+root@eltex-practice2-pg1-v19:~# mkdir etc_backup_gzip
+root@eltex-practice2-pg1-v19:~# mkdir etc_backup_7zip
+root@eltex-practice2-pg1-v19:~# tar -xzf etc_backup_updated.tar.gz -C etc_backup_gzip
+root@eltex-practice2-pg1-v19:~# 7za x etc_backup.7z -o/etc_backup_7zip
+
+7-Zip (a) 23.01 (x64) : Copyright (c) 1999-2023 Igor Pavlov : 2023-06-20
+ 64-bit locale=en_US.UTF-8 Threads:2 OPEN_MAX:1024
+
+Scanning the drive for archives:
+1 file, 485876 bytes (475 KiB)
+
+Extracting archive: etc_backup.7z
+--
+Path = etc_backup.7z
+Type = 7z
+Physical Size = 485876
+Headers Size = 90
+Method = LZMA2:24
+Solid = -
+Blocks = 1
+
+Everything is Ok
+
+Size:       3461120
+Compressed: 485876
+
+root@eltex-practice2-pg1-v19:~# diff etc_backup_gzip/etc_backup/motd etc_backup_bzip/etc_backup/motd
+1c1
+< Fri Oct 17 06:05:47 AM UTC 2025
+---
+> Кузлякин Дмитрий
+root@eltex-practice2-pg1-v19:~#

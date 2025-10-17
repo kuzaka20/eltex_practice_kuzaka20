@@ -1,0 +1,147 @@
+root@eltex-practice2-pg1-v19:~# git config --global user.name "kuzaka20"
+root@eltex-practice2-pg1-v19:~# git config --global user.email kuzaka20@mail.ru
+root@eltex-practice2-pg1-v19:~# git config --global init.defaultBranch main
+
+root@eltex-practice2-pg1-v19:~# apt update
+root@eltex-practice2-pg1-v19:~# apt install git gh
+
+root@eltex-practice2-pg1-v19:~# ssh-keygen -t ed25519 -f ~/.ssh/kuzaka20
+Generating public/private ed25519 key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /root/.ssh/kuzaka20
+Your public key has been saved in /root/.ssh/kuzaka20.pub
+The key fingerprint is:
+SHA256:nCgsDNhiI4iV6rDLAPIjW4RC8QlnAGieq7IcjsedPC8 root@eltex-practice2-pg1-v19
+The key's randomart image is:
++--[ED25519 256]--+
+|++++             |
+|==* .            |
+|@=oo             |
+|X*o.   o .       |
+|*++ o . S        |
+|+o+. .           |
+|+B + .           |
+|O.+ E            |
+|+=   +.          |
++----[SHA256]-----+
+
+
+root@eltex-practice2-pg1-v19:~# gh auth login
+? What account do you want to log into? GitHub.com
+? What is your preferred protocol for Git operations on this host? SSH
+? Upload your SSH public key to your GitHub account? /root/.ssh/kuzaka20.pub
+? Title for your SSH key: eltex-practice2-pg1-v19
+? How would you like to authenticate GitHub CLI? Login with a web browser
+
+! First copy your one-time code: B6D6-B1A7
+Press Enter to open github.com in your browser... ^C
+root@eltex-practice2-pg1-v19:~# ^C
+root@eltex-practice2-pg1-v19:~# gh auth login
+? What account do you want to log into? GitHub.com
+? What is your preferred protocol for Git operations on this host? SSH
+? Upload your SSH public key to your GitHub account? /root/.ssh/kuzaka20.pub
+? Title for your SSH key: eltex-practice2-pg1-v19
+? How would you like to authenticate GitHub CLI? Login with a web browser
+
+! First copy your one-time code: BBBF-F193
+Press Enter to open github.com in your browser...
+! Failed opening a web browser at https://github.com/login/device
+  exec: "xdg-open,x-www-browser,www-browser,wslview": executable file not found in $PATH
+  Please try entering the URL in your browser manually
+✓ Authentication complete.
+- gh config set -h github.com git_protocol ssh
+✓ Configured git protocol
+! Authentication credentials saved in plain text
+✓ Uploaded the SSH key to your GitHub account: /root/.ssh/kuzaka20.pub
+✓ Logged in as kuzaka20
+
+root@eltex-practice2-pg1-v19:~# gh auth setup-git --hostname github.com
+
+root@eltex-practice2-pg1-v19:~# gh repo create --public eltex_practice_kuzaka20
+✓ Created repository kuzaka20/eltex_practice_kuzaka20 on GitHub
+  https://github.com/kuzaka20/eltex_practice_kuzaka20
+
+root@eltex-practice2-pg1-v19:/# mkdir eltex_practice_kuzaka20 && cd eltex_practice_kuzaka20
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# echo "# Репозиторий для выпосления практик от компании eltex" >> README.md
+
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# git init
+Initialized empty Git repository in /eltex_practice_kuzaka20/.git/
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# git add README.md
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# git commit -m "first commit"
+[main (root-commit) 292e5cb] first commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# git branch -M main
+
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# git remote add origin https://github.com/kuzaka20/eltex_practice_kuzaka20.git
+
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# git status
+On branch main
+nothing to commit, working tree clean
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# git push -u origin main
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 288 bytes | 288.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/kuzaka20/eltex_practice_kuzaka20.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# mkdir -p module1/task1
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# mkdir module1/task2
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# mkdir module1/task3
+
+root@eltex-practice2-pg1-v19:/# ls
+bin                dev                      home               lost+found  proc  sbin.usr-is-merged  sys
+bin.usr-is-merged  eltex_practice_kuzaka20  lib                media       root  snap                tmp
+boot               etc                      lib64              mnt         run   srv                 usr
+cdrom              etc_backup_7zip          lib.usr-is-merged  opt         sbin  swap.img            var
+root@eltex-practice2-pg1-v19:/# mkdir eltex_practice_kuzaka20_clone && cd eltex_practice_kuzaka20_clone
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20_clone# git clone https://github.com/kuzaka20/eltex_practice_kuzaka20.git
+Cloning into 'eltex_practice_kuzaka20'...
+remote: Enumerating objects: 16, done.
+remote: Counting objects: 100% (16/16), done.
+remote: Compressing objects: 100% (13/13), done.
+remote: Total 16 (delta 1), reused 10 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (16/16), done.
+Resolving deltas: 100% (1/1), done.
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20_clone# ls
+
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20_clone/eltex_practice_kuzaka20# git fetch
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20_clone/eltex_practice_kuzaka20# git log origin/main
+commit 0903429d972d170709f48510a735867027b669a7 (HEAD -> main, origin/main, origin/HEAD)
+Author: kuzaka20 <kuzaka20@mail.ru>
+Date:   Fri Oct 17 08:07:37 2025 +0000
+
+    modile1
+
+commit f26a888e1ba511e9403bcdb8e59524d6e29be034
+Author: kuzaka20 <152894743+kuzaka20@users.noreply.github.com>
+Date:   Fri Oct 17 14:47:43 2025 +0700
+
+    Update README.md
+
+commit 7571d0af1a4eae382e17f4671f118806f6623611
+Author: kuzaka20 <152894743+kuzaka20@users.noreply.github.com>
+Date:   Fri Oct 17 14:47:22 2025 +0700
+
+    Update README.md
+
+commit 292e5cb595fb4f39bdfdf6e20b0a3bb402301aa9
+Author: kuzaka20 <kuzaka20@mail.ru>
+Date:   Fri Oct 17 07:44:50 2025 +0000
+
+    first commit
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20_clone/eltex_practice_kuzaka20# git diff main origin/main
+
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# mkdir -p module2/task1
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# mkdir module2/task2
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# mkdir module2/task3
+
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# mv ../root/practice2_eltex-pg1-v19_part1.log module2/task1
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# mv ../root/practice2_eltex-pg1-v19_part2.log module2/task2
+root@eltex-practice2-pg1-v19:/eltex_practice_kuzaka20# mv ../root/practice2_eltex-pg1-v19_part3.log module2/task3
+
