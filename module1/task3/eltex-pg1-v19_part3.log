@@ -1,0 +1,12 @@
+mkdir -p D1/D2/D3
+touch D1/D2/file.txt
+echo Кузлякин Дмитрий > D1/D2/file.txt
+ln -s D1/D2/file.txt D1/D2/D3/file.txt
+ln D1/D2/file.txt D1/D2/D3/file1.txt
+ls D1/D2/D3
+cat D1/D2/D3/file1.txt
+mv D1/D2/file.txt D1/
+cat D1/D2/D3/file1.txt
+cat D1/D2/D3/file.txt
+rm -rf D1/D2
+find / -type f -size +20M -exec du -h {} \; 2>/dev/null > eltex-pg1-v19_part3_gt50M.log

@@ -1,0 +1,21 @@
+screen -S eltex-pg1-v19_part2
+touch eltex-pg1-v19_part.log
+compgen -c ls
+compgen -v HIST
+echo HISTSIZE: 1000
+echo HISTFILESIZE: 2000
+echo .*
+export HISTTIMEFORMAT=%d/%m/%y %T 
+date
+tail -3 /home/eltex-pg1-v19/.bash_history
+export PROMPT_COMMAND=history -a
+tail -3 /home/eltex-pg1-v19/.bash_history
+date
+tail -3 /home/eltex-pg1-v19/.bash_history
+DATE=$(date +%Y-%m-%d)
+TIME=$(date +%H:%M:%S)
+DATE_TIME="$DATE $TIME"
+ls /bin | grep '[0-9]'
+ls /sbin | grep '[0-9]'
+export PS1='\u@\h-\A> '
+export PS1='\u@\h:\w\$ '
