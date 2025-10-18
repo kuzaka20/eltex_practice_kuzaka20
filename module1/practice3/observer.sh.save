@@ -1,0 +1,17 @@
+#!/bin/bash
+
+CONFIG_FILE = "$observer.conf"
+LOG_FIEL = "$observer.log"
+
+log_print(){
+	echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$LOG_FILE"
+}
+
+log_print "Запуск observer.sh ..."
+
+if [! -f "$CONFIG_FILE"]; then
+	log_print "ERROR: Файл $CONFIG_FILE не найден"
+	exit 1
+fi
+
+while read -r str; do

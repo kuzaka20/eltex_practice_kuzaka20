@@ -1,0 +1,141 @@
+2025-10-18 12:43:12 - Запуск observer.sh ...
+2025-10-18 12:43:12 - CHECK: template_task.sh
+2025-10-18 12:43:12 - STATUS: template_task.sh не запущен
+2025-10-18 12:43:12 - PROCESS START:  (PID: /proc/996)
+2025-10-18 12:43:12 - CHECK: template_task_new.sh
+2025-10-18 12:43:12 - STATUS: template_task_new.sh запущен
+2025-10-18 12:43:12 - CHECK: test1
+2025-10-18 12:43:12 - STATUS: test1 не запущен
+2025-10-18 12:43:12 - ERROR: Файл test1 не найден
+2025-10-18 12:43:12 - CHECK: test2
+2025-10-18 12:43:12 - STATUS: test2 не запущен
+2025-10-18 12:43:12 - ERROR: Файл test2 не найден
+2025-10-18 12:43:12 - Выполнение проверки завершено
+2025-10-18 12:43:12 - 
+2025-10-18 12:43:13 - Запуск observer.sh ...
+2025-10-18 12:43:13 - CHECK: template_task.sh
+2025-10-18 12:43:13 - STATUS: template_task.sh запущен
+2025-10-18 12:43:13 - CHECK: template_task_new.sh
+2025-10-18 12:43:13 - STATUS: template_task_new.sh запущен
+2025-10-18 12:43:13 - CHECK: test1
+2025-10-18 12:43:13 - STATUS: test1 не запущен
+2025-10-18 12:43:13 - ERROR: Файл test1 не найден
+2025-10-18 12:43:13 - CHECK: test2
+2025-10-18 12:43:13 - STATUS: test2 не запущен
+2025-10-18 12:43:13 - ERROR: Файл test2 не найден
+2025-10-18 12:43:13 - Выполнение проверки завершено
+2025-10-18 12:43:13 - 
+2025-10-18 12:43:14 - Запуск observer.sh ...
+2025-10-18 12:43:14 - CHECK: template_task.sh
+2025-10-18 12:43:14 - STATUS: template_task.sh запущен
+2025-10-18 12:43:14 - CHECK: template_task_new.sh
+2025-10-18 12:43:14 - STATUS: template_task_new.sh запущен
+2025-10-18 12:43:14 - CHECK: test1
+2025-10-18 12:43:14 - STATUS: test1 не запущен
+2025-10-18 12:43:14 - ERROR: Файл test1 не найден
+2025-10-18 12:43:14 - CHECK: test2
+2025-10-18 12:43:14 - STATUS: test2 не запущен
+2025-10-18 12:43:14 - ERROR: Файл test2 не найден
+2025-10-18 12:43:14 - Выполнение проверки завершено
+2025-10-18 12:43:14 - 
+2025-10-18 12:52:01 - Запуск observer.sh ...
+2025-10-18 12:52:01 - CHECK: template_task.sh
+2025-10-18 12:52:01 - STATUS: template_task.sh не запущен
+2025-10-18 12:52:01 - PROCESS START:  (PID: /proc/996)
+2025-10-18 12:52:01 - CHECK: template_task_new.sh
+2025-10-18 12:52:01 - STATUS: template_task_new.sh не запущен
+2025-10-18 12:52:01 - PROCESS START:  (PID: /proc/996)
+2025-10-18 12:52:01 - CHECK: test1
+2025-10-18 12:52:01 - STATUS: test1 не запущен
+2025-10-18 12:52:01 - ERROR: Файл test1 не найден
+2025-10-18 12:52:01 - CHECK: test2
+2025-10-18 12:52:01 - STATUS: test2 не запущен
+2025-10-18 12:52:01 - ERROR: Файл test2 не найден
+2025-10-18 12:52:01 - Выполнение проверки завершено
+2025-10-18 12:52:01 - 
+2025-10-18 12:53:01 - Запуск observer.sh ...
+2025-10-18 12:53:01 - CHECK: template_task.sh
+2025-10-18 12:53:01 - STATUS: template_task.sh не запущен
+2025-10-18 12:53:02 - PROCESS START:  (PID: /proc/996)
+2025-10-18 12:53:02 - CHECK: template_task_new.sh
+2025-10-18 12:53:02 - STATUS: template_task_new.sh запущен
+2025-10-18 12:53:02 - CHECK: test1
+2025-10-18 12:53:02 - STATUS: test1 не запущен
+2025-10-18 12:53:02 - ERROR: Файл test1 не найден
+2025-10-18 12:53:02 - CHECK: test2
+2025-10-18 12:53:02 - STATUS: test2 не запущен
+2025-10-18 12:53:02 - ERROR: Файл test2 не найден
+2025-10-18 12:53:02 - Выполнение проверки завершено
+2025-10-18 12:53:02 - 
+2025-10-18 12:54:01 - Запуск observer.sh ...
+2025-10-18 12:54:01 - CHECK: template_task.sh
+2025-10-18 12:54:01 - STATUS: template_task.sh не запущен
+2025-10-18 12:54:01 - PROCESS START:  (PID: /proc/996)
+2025-10-18 12:54:01 - CHECK: template_task_new.sh
+2025-10-18 12:54:01 - STATUS: template_task_new.sh запущен
+2025-10-18 12:54:01 - CHECK: test1
+2025-10-18 12:54:01 - STATUS: test1 не запущен
+2025-10-18 12:54:01 - ERROR: Файл test1 не найден
+2025-10-18 12:54:01 - CHECK: test2
+2025-10-18 12:54:01 - STATUS: test2 не запущен
+2025-10-18 12:54:01 - ERROR: Файл test2 не найден
+2025-10-18 12:54:01 - Выполнение проверки завершено
+2025-10-18 12:54:01 - 
+2025-10-18 12:55:01 - Запуск observer.sh ...
+2025-10-18 12:55:01 - CHECK: template_task.sh
+2025-10-18 12:55:01 - STATUS: template_task.sh не запущен
+2025-10-18 12:55:01 - PROCESS START:  (PID: /proc/996)
+2025-10-18 12:55:01 - CHECK: template_task_new.sh
+2025-10-18 12:55:01 - STATUS: template_task_new.sh запущен
+2025-10-18 12:55:01 - CHECK: test1
+2025-10-18 12:55:01 - STATUS: test1 не запущен
+2025-10-18 12:55:01 - ERROR: Файл test1 не найден
+2025-10-18 12:55:01 - CHECK: test2
+2025-10-18 12:55:02 - STATUS: test2 не запущен
+2025-10-18 12:55:02 - ERROR: Файл test2 не найден
+2025-10-18 12:55:02 - Выполнение проверки завершено
+2025-10-18 12:55:02 - 
+2025-10-18 14:22:43 - Запуск observer.sh ...
+2025-10-18 14:22:43 - CHECK: template_task.sh
+2025-10-18 14:22:43 - STATUS: template_task.sh не запущен
+2025-10-18 14:22:43 - PROCESS START:  (PID: /proc/996)
+2025-10-18 14:22:43 - CHECK: template_task_new.sh
+2025-10-18 14:22:43 - STATUS: template_task_new.sh не запущен
+2025-10-18 14:22:43 - PROCESS START:  (PID: /proc/996)
+2025-10-18 14:22:43 - CHECK: test1
+2025-10-18 14:22:43 - STATUS: test1 не запущен
+2025-10-18 14:22:43 - ERROR: Файл test1 не найден
+2025-10-18 14:22:43 - CHECK: test2
+2025-10-18 14:22:43 - STATUS: test2 не запущен
+2025-10-18 14:22:43 - ERROR: Файл test2 не найден
+2025-10-18 14:22:43 - CHECK: template_task_s1.sh
+2025-10-18 14:22:43 - STATUS: template_task_s1.sh не запущен
+2025-10-18 14:22:44 - PROCESS START:  (PID: /proc/996)
+2025-10-18 14:22:44 - CHECK: template_task_s2.sh
+2025-10-18 14:22:44 - STATUS: template_task_s2.sh не запущен
+2025-10-18 14:22:44 - PROCESS START:  (PID: /proc/996)
+2025-10-18 14:22:44 - CHECK: template_task_s3.sh
+2025-10-18 14:22:44 - STATUS: template_task_s3.sh не запущен
+2025-10-18 14:22:44 - PROCESS START:  (PID: /proc/996)
+2025-10-18 14:22:44 - Выполнение проверки завершено
+2025-10-18 14:22:44 - 
+2025-10-18 14:23:07 - Запуск observer.sh ...
+2025-10-18 14:23:07 - CHECK: template_task.sh
+2025-10-18 14:23:07 - STATUS: template_task.sh не запущен
+2025-10-18 14:23:07 - PROCESS START:  (PID: /proc/996)
+2025-10-18 14:23:07 - CHECK: template_task_new.sh
+2025-10-18 14:23:07 - STATUS: template_task_new.sh запущен
+2025-10-18 14:23:07 - CHECK: test1
+2025-10-18 14:23:07 - STATUS: test1 не запущен
+2025-10-18 14:23:07 - ERROR: Файл test1 не найден
+2025-10-18 14:23:07 - CHECK: test2
+2025-10-18 14:23:07 - STATUS: test2 не запущен
+2025-10-18 14:23:07 - ERROR: Файл test2 не найден
+2025-10-18 14:23:07 - CHECK: template_task_s1.sh
+2025-10-18 14:23:08 - STATUS: template_task_s1.sh запущен
+2025-10-18 14:23:08 - CHECK: template_task_s2.sh
+2025-10-18 14:23:08 - STATUS: template_task_s2.sh запущен
+2025-10-18 14:23:08 - CHECK: template_task_s3.sh
+2025-10-18 14:23:08 - STATUS: template_task_s3.sh запущен
+2025-10-18 14:23:08 - Выполнение проверки завершено
+2025-10-18 14:23:08 - 
