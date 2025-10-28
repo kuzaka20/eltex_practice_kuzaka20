@@ -8,6 +8,7 @@ int charInInt(int x, int y, char* data){
         num += data[i] - '0';
     }
     printf("1 - %d 2 - %d 3 - %d\n", num, x, y);
+
     return num;
 }
 
@@ -34,32 +35,15 @@ int mul(int x , int y){
     return (x*y);
 
 }
-void shift(char *operator, int* argument, int num, int result ,int count_operator){
-    char* tmp_operator = calloc(count_operator - 1, sizeof(char)); 
-    for(int i = 0; i < num; i++){
-        tmp_operator[i] = operator[i];
+void shift(char *operator, int *argument, int num, int result, int count_operator) {
+    for(int i = num; i < count_operator - 1; i++) {
+        operator[i] = operator[i + 1];
     }
-    for(int i = num; i < count_operator - 1; i++){
-        tmp_operator[i] = operator[i + 1];
+    
+    argument[num] = result;
+    for(int i = num + 1; i < count_operator; i++) {
+        argument[i] = argument[i + 1];
     }
-    operator = realloc(operator ,(count_operator - 1) * sizeof(char));
-    for(int i = 0; i < count_operator - 1; i++){
-        operator[i] = tmp_operator[i];
-    }
-    free(tmp_operator);
-    char* tmp_argument = calloc(count_operator, sizeof(char)); 
-    for(int i = 0; i < num; i++){
-        tmp_argument[i] = argument[i];
-    }
-    tmp_argument[num] = result;
-    for(int i = num + 1; i < count_operator; i++){
-        tmp_argument[i] = argument[i + 1];
-    }
-    argument = realloc(argument, count_operator * sizeof(char));
-    for(int i = 0; i < count_operator; i++){
-        argument[i] = tmp_argument[i];
-    }
-    free(tmp_argument);
 }
 
 void count_arifmetic(char* operator ,int* argument, int num, int count_operator){
@@ -89,7 +73,7 @@ void count_arifmetic(char* operator ,int* argument, int num, int count_operator)
     default:
         break;
     }
-    //printf("%d ", result);
+    // printf("%d ", result);
 }
 
 void priority(int* priority_operator, int count_operator, char* operator){
@@ -126,6 +110,11 @@ void arifmetic(char* operator ,int* argument, int count_operator){
     int* priority_operator = calloc(count_operator, sizeof(int));
     int flag_priority_two = 1, flag = 0;;
     priority(priority_operator, count_operator, operator);
+    // printf("operator - orig = ");
+    // for(int i = 0; i < count_operator + 1; i++){
+    //     printf("%d ", argument[i]);
+    // }
+    // printf("\n");
     while(count_operator != 0){
         for(int i = 0; i < count_operator; i++){
             if(flag_priority_two == 1){
@@ -145,6 +134,14 @@ void arifmetic(char* operator ,int* argument, int count_operator){
             }
 
         }
+        for(int i = 0; i < count_operator+ 1; i++){
+            printf("%d ", argument[i]);
+        }
+        printf("\n");
+        for(int i = 0; i < count_operator; i++){
+            printf("%c ", operator[i]);
+        }
+        printf("\n");
         if(flag == 0){
             flag_priority_two = 0;
         }else{
