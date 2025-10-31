@@ -5,8 +5,8 @@
 
 
 int main(){
-    int id = 0;
-    contact** contacts = calloc(id ,sizeof(contact*));
+    int id = 0, count = 0;
+    contact* contacts[LEN_CONTACT];
     while(1){
         printf("Enter 1 - Add, 2 - Replace, 3 - Delete, 4 - Print, 0 - Exit\n");
         char num, check;
@@ -19,20 +19,21 @@ int main(){
             }
             continue;
         }
+        short int error;
         switch (num)
         {
         case '1':
             id++;
-            if(addContact(id, contacts) == 0){
+            count++;
+            if(addContact(id, contacts, count) == 0){
                 printf("Incorrect input\n");
                 id--;
+                count--;
             }
             break;
 
         case '2':
-            break;
-        case '3':
-            short int error = delContact(id, contacts);
+            error = replaceContactCheckID(id, contacts, count);
             if(error == 1){
                 printf("Incorrect input\n");
             }
@@ -40,9 +41,21 @@ int main(){
                 printf("Id is not valid\n");
             }
             break;
+        case '3':
+            error = delContact(id, contacts, count);
+            count--;
+            if(error == 1){
+                printf("Incorrect input\n");
+                count++;
+            }
+            else if(error == 0){
+                printf("Id is not valid\n");
+                count++;
+            }
+            break;
 
         case '4':
-            for(int i = 1; i < id + 1; i++){
+            for(int i = 0; i < count; i++){
                 printContact(contacts[i]);
             }
             break;
