@@ -92,47 +92,70 @@ void freeQueue(Queue* queue){
     free(tmp);
 }
 
-int popPriority(Queue* queue, int priority){
+int popPriority(Queue* queue, int priority,int* result){
     if(queue->head == NULL){
+        return 0;
+    }
+    
+    Node* tmp = queue->head;
+    
+    if(tmp->priority == priority){
+        *result = tmp->data;
+        queue->head = tmp->next;
+        if(queue->head == NULL){
+            queue->tail = NULL;
+        }
+        free(tmp);
         return 1;
     }
-    int count = 0;
-    Node* tmp = queue->head;
-    while(tmp->priority == priority){
-        count++;
-        queue->head = tmp->next;
-        if(tmp == NULL){
-            queue->tail = NULL;
-        }
-        tmp = queue->head;
-        if(tmp == NULL){
-            break;
-        }
-    }
+    
     while(tmp->next != NULL){
         if(tmp->next->priority == priority){
+            *result = tmp->next->data;
+            Node* toDelete = tmp->next;
             tmp->next = tmp->next->next;
-            count++;
+            if(tmp->next == NULL){
+                queue->tail = tmp;
+            }
+            free(toDelete);
+            return 1;
         }
         tmp = tmp->next;
-        if(tmp == NULL){
-            queue->tail = NULL;
-            break;
-        }
     }
-    if(count == 0){
-        return 2;
-    }
+    
     return 0;
 }
 
-void popLowPriority(Queue* queue, int priority){
-    while(queue->head != NULL){
-        if(queue->head->priority <= priority){
-            pop(queue);
-        }
-        else{
-            break;
-        }
+int popLowPriority(Queue* queue, int priority, int* result){
+    if(queue->head == NULL){
+        return 0;
     }
+    
+    Node* tmp = queue->head;
+    
+    if(tmp->priority > priority){
+        *result = tmp->data;
+        queue->head = tmp->next;
+        if(queue->head == NULL){
+            queue->tail = NULL;
+        }
+        free(tmp);
+        return 1;
+    }
+    
+    while(tmp->next != NULL){
+        if(tmp->next->priority > priority){
+            *result = tmp->next->data;
+            Node* toDelete = tmp->next;
+            tmp->next = tmp->next->next;
+            if(tmp->next == NULL){
+                queue->tail = tmp;
+            }
+            free(toDelete);
+            return 1;
+        }
+        tmp = tmp->next;
+    }
+    
+    return 0;
 }

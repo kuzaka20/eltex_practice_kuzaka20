@@ -42,3 +42,4 @@ int replaceContactCheckID(int id, node** data);
 int delContact(int num, node** data);
 void balanceTree(tree* contacts);
 void printRoot(tree* contact);
+void displayTree(tree* contacts);

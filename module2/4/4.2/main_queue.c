@@ -18,21 +18,21 @@ int main(){
     printf("%d\n", pop(queue));
     queuePrint(queue);
     int priority_del = rand()%10;
+    int result;
     printf("-%d-\n",priority_pop[priority_del]);
-    int error = popPriority(queue, priority_pop[priority_del]);
-    if(error == 1){
-        printf("Queue is empty\n");
-    }
-    else if(error == 2){
-        printf("No data with priority %d\n", priority_del);
-    }
-    else{
-        printf("Ok\n");
+    if(popPriority(queue, priority_pop[priority_del], &result)){
+        printf("OK: %d\n", result);
+    } else {
+        printf("Error\n");
     }
     queuePrint(queue);
     priority_del = rand()%10;
     printf("-%d-\n", priority_pop[priority_del]);
-    popLowPriority(queue, priority_pop[priority_del]);
+    if(popLowPriority(queue, priority_pop[priority_del], &result)) {
+        printf("OK: %d\n", result);
+    } else {
+        printf("Error\n");
+    }
     queuePrint(queue);
     freeQueue(queue);
     free(queue);

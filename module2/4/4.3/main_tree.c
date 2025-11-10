@@ -8,7 +8,7 @@ int main(){
     int id = 0;
     tree* contacts = initTree();
     while(1){
-        printf("Enter 1 - Add, 2 - Replace, 3 - Delete, 4 - Print, 5 - Balance Tree, 6 - Print root, 0 - Exit\n");
+        printf("Enter 1 - Add, 2 - Replace, 3 - Delete, 4 - Print, 5 - Balance Tree, 6 - Print root, 7 - Print Tree 0 - Exit\n");
         char num, check;
         int id_num;
         scanf("%c", &num);
@@ -75,6 +75,10 @@ int main(){
 
         case'6':
             printRoot(contacts);
+            break;
+            
+        case'7':
+            displayTree(contacts);
             break;
 
         case '0':

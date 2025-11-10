@@ -464,3 +464,29 @@ void printRoot(tree* contact){
         printContact(contact->root->data);
     }
 }
+
+void printTreeSimple(node* node, int depth) {
+    if (node == NULL) {
+        return;
+    }
+    
+    printTreeSimple(node->right, depth + 1);
+    
+    for (int i = 0; i < depth; i++) {
+        printf("    ");
+    }
+    printf("(%d) %s\n", node->data->id, node->data->name);
+    
+    printTreeSimple(node->left, depth + 1);
+}
+
+void displayTree(tree* contacts) {
+    if (contacts == NULL || contacts->root == NULL) {
+        printf("Tree is empty\n");
+        return;
+    }
+    
+    printf("Binary Tree:\n");
+    printf("============\n");
+    printTreeSimple(contacts->root, 0);
+}

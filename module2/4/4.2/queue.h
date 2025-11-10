@@ -21,5 +21,5 @@ void pushQueue(Queue* queue, int data, int priority);
 int pop(Queue* queue);
 void queuePrint(Queue* queue);
 void freeQueue(Queue* queue);
-int popPriority(Queue* queue, int priority);
-void popLowPriority(Queue* queue, int priority);
+int popPriority(Queue* queue, int priority, int* result);
+int popLowPriority(Queue* queue, int priority, int* result);
