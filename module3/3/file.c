@@ -3,25 +3,44 @@
 #include "list.h"
 
 int readFile(list* data, int* count, int* id){
-    FILE *file = fopen("list.data", "r");
+    FILE *file = fopen("list.data", "rb");
     if(file == NULL){
-        printf("Error not open file\n");
-        return 1;
+        file = fopen("list.data", "wb");
+        if(file == NULL){
+            printf("Error: cannot create or open file\n");
+            return 1;
+        }
+        printf("File created successfully\n");
+        fclose(file);
+        return 0;
     }
+    
     while(1){
         contact* contic = malloc(sizeof(contact));
-        size_t read_count = fread(contic,sizeof(contact), 1, file);
+        size_t read_count = fread(contic, sizeof(contact), 1, file);
         if(read_count == 1){
             if(pushListFile(data, contic) == 1){
                 printf("Incorrect read file\n");
+                free(contic);
+                fclose(file);
                 return 1;
             }
             else{
                 (*count)++;
-                *id = data->head->data->id;
+                if(data->head != NULL && data->head->data != NULL) {
+                    node* current = data->head;
+                    *id = current->data->id;
+                    while(current != NULL) {
+                        if(current->data->id > *id) {
+                            *id = current->data->id;
+                        }
+                        current = current->next;
+                    }
+                }
             }
         }
         else{
+            free(contic);
             break;
         }
     }
@@ -30,7 +49,7 @@ int readFile(list* data, int* count, int* id){
 }
 
 int writeFile(list* data, int count){
-    FILE *file = fopen("list.txt", "w");
+    FILE *file = fopen("list.data", "wb");
     if(file == NULL){
         printf("Error not open file\n");
         return 1;

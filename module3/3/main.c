@@ -3,14 +3,12 @@
 #include "list.h"
 #include "file.h"
 
-
-
 int main(){
     int id = 0, count = 0;
     list* contacts = initList();
     if(readFile(contacts, &count, &id) == 1){
         return 1;
-    };
+    }
     while(1){
         printf("Enter 1 - Add, 2 - Replace, 3 - Delete, 4 - Print, 0 - Exit\n");
         char num, check;
